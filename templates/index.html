@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}TARS{% endblock %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Recently Added TV Shows</h3>
+					</div>
+					<div class="panel-body">
+						<div class="media-list">
+							<div class="media-left">
+								<a href="#">
+									<img class="media-object" data-src="holder.js/170x96" alt="Generic placeholder image">
+									</a>
+								</div>
+
+								<div class="media-body">
+									<h4 class="media-heading">Elementary</h4>
+									<em>Season 2 - Episode 5 (1/12/15)</em>
+									<p>Sherlock and friends investigate a murder. Captain Gregson eats a banana.</p>
+									<div class="btn-group">
+										<button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+										<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Queue</button>
+										<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
+									</div>
+
+								</div>
+
+							</div>	
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Recently Added Movies</h3>
+						</div>
+						<div class="panel-body">
+							<div class="media">
+								<div class="media-left">
+									<a href="#">
+										<img class="media-object" data-src="holder.js/80x120" alt="Generic placeholder image">
+										</a>
+									</div>
+
+									<div class="media-body">
+										<h4 class="media-heading">Jurassic Park</h4>
+										<p>Leon Jones, Bobbity Smith, Will Smith, Joe the Plumber</p>
+										<div class="btn-group">
+											<button type="button" class="btn btn-success btn-xs">Play</button>
+											<button type="button" class="btn btn-default btn-xs">Queue</button>
+											<button type="button" class="btn btn-default btn-xs">Info</button>
+											<button type="button" class="btn btn-default btn-xs">Trailer</button>
+										</div>
+
+									</div>
+								</div>					</div>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Current Playlist</h3>
+							</div>
+							<table class="table table-striped">
+								<thead>
+									<tr><th>#</th><th>Title</th></tr>
+								</thead>
+								<tbody>
+									<tr> <td>1</td><td>Elementary - The Man Who Knew a Lot of Stuff and Solved Mysteries</td> </tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		{% endblock %}
