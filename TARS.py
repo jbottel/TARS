@@ -13,7 +13,8 @@ def remote():
 
 @app.route('/remote/playpause')
 def remote_playpause():
-    xbmc.Player.PlayPause([PLAYER_VIDEO])
+    xbmc.Player.PlayPause({"playerid":0})
+    return 'done.'
 
 
 if __name__ == '__main__':

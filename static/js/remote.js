@@ -1,3 +1,3 @@
 $("#play").click(function() {
-								$.get("/remote/playpause");
+	$.get("/remote/playpause");
 });
