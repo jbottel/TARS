@@ -14,7 +14,33 @@ def remote():
 @app.route('/remote/playpause')
 def remote_playpause():
     xbmc.Player.PlayPause({"playerid":0})
-    return 'done.'
+    xbmc.Player.PlayPause({"playerid":1})
+    return ''
+
+@app.route('/remote/left')
+def remote_left():
+    xbmc.Input.Left()
+    return ''
+
+@app.route('/remote/right')
+def remote_right():
+    xbmc.Input.Right()
+    return ''
+
+@app.route('/remote/up')
+def remote_up():
+    xbmc.Input.Up()
+    return ''
+
+@app.route('/remote/down')
+def remote_down():
+    xbmc.Input.Down()
+    return ''
+
+@app.route('/remote/select')
+def remote_select():
+    xbmc.Input.Select()
+    return ''
 
 
 if __name__ == '__main__':
