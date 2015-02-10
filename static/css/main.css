@@ -1,0 +1,25 @@
+a { cursor: pointer; }
+
+
+#remoteDiv {
+	display: none;
+	width:179px;
+	height:210px;
+	right: 25px;
+	bottom: 55px;
+	position: absolute;
+	z-index: 999;
+}
+
+.remoteFrame {
+	position: relative;
+}
+
+#remoteDiv iframe {
+	width: 159px;
+	height:210px;
+	overflow: hidden;
+	border: solid 1px #111;
+	position:relative;
+	margin: 0 auto;
+}
