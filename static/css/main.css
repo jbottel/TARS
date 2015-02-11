@@ -23,3 +23,20 @@ a { cursor: pointer; }
 	position:relative;
 	margin: 0 auto;
 }
+
+#progressbar .slider-selection {
+	background: #333;
+}
+
+#progressbar .slider-handle {
+	background: #555;
+}
+
+#progressbar .slider-track-right {
+	background: #666;
+}
+
+#progressbar {
+	width: 900px;
+}
+
