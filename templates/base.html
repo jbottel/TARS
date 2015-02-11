@@ -14,6 +14,7 @@
 			<!-- Bootstrap -->
 			<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
 			<link href="/static/css/main.css" rel="stylesheet" media="screen">
+			<link href="/static/css/bootstrap-slider.css" rel="stylesheet" media="screen">
 					{%- endblock styles %}
 					{%- endblock head %}
 				</head>
@@ -56,9 +57,11 @@
 							<div class="navbar navbar-default navbar-fixed-bottom">
 								<div class="container">
 									<div class="navbar-collapse collapse" id="footer-body">
-										<ul class="nav navbar-nav">
-											<li><a href="#">Currently Playing</a></li>
-										</ul>
+										<div class="nav navbar-nav navbar-left" style="line-height: 50px;">
+											<div style="vertical-align: middle; height:50px;">
+												<input class="navbar-test" id="ex9" type="text" style="width:900px; margin-top:20px;" data-slider-min="0" data-slider-max="720">
+											</div>
+										</div>
 										<ul class="nav navbar-nav navbar-right">
 											<li><a id="remote-button"><span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span>&nbsp; Remote</a></li>
 										</ul>
@@ -73,9 +76,14 @@
 					<script src="/static/js/jquery-1.11.2.min.js"></script>
 					<script src="/static/js/bootstrap.min.js"></script>
 					<script src="/static/js/holder.min.js"></script>
+					<script src="/static/js/bootstrap-slider.js"></script>
 					<script>
 						$("#remote-button").click(function() {
 							$("#remoteDiv").toggle();
+						});
+						$("#ex9").slider({
+							precision: 2,
+							value: 8.115 // Slider will instantiate showing 8.12 due to specified precision
 						});
 					</script>
 					{%- endblock scripts %}
