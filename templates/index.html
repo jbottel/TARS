@@ -63,7 +63,7 @@
 												{{cast.name}}{% if not loop.last %}, {% endif %}
 											{%endfor%}
 										</p>
-										<p class="movie-desc">{{ movie.plot|truncate(180) }}</p>
+										<p class="movie-desc">{{ movie.plot|truncate(150) }}</p>
 										<div class="btn-group">
 											<button type="button" class="btn btn-success btn-xs">Play</button>
 											<button type="button" class="btn btn-default btn-xs">Queue</button>
@@ -87,10 +87,23 @@
 							</div>
 							<table class="table table-striped">
 								<thead>
-									<tr><th>#</th><th>Title</th></tr>
+									<tr><th colspan="2">Video</th></tr>
+									<tr><th>#</th><th>Title</th><th>Duration</th></tr>
 								</thead>
 								<tbody>
-									<tr> <td>1</td><td>Elementary - The Man Who Knew a Lot of Stuff and Solved Mysteries</td> </tr>
+									{% for item in video_playlist %}
+										<tr> <td>{{ item.id }}</td><td>{{ item.title }}</td><td>{{ item.runtime }}
+									{% endfor %}
+								</tbody>
+
+								<thead>
+									<tr><th colspan="2">Audio</th></tr>
+									<tr><th>#</th><th>Title</th><th>Duration</th></tr>
+								</thead>
+								<tbody>
+									{% for item in audio_playlist %}
+										<tr> <td>{{ item.id }}</td><td>{{ item.title }}</td><td>{{ item.duration // 60}}:{{ item.duration - (60 * (item.duration // 60))}}</td> </tr>
+									{% endfor %}
 								</tbody>
 							</table>
 						</div>

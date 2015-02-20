@@ -17,6 +17,13 @@ def index():
     except:
         recently_added_movies = []
 
+    try:
+        video_playlist = xbmc.Playlist.GetItems({"properties":["runtime","showtitle","title"], "playlistid":1})["result"]["items"]
+        audio_playlist = xbmc.Playlist.GetItems({"properties":["duration","artist","title"], "playlistid":0})["result"]["items"]
+        playlist = video_playlist + audio_playlist
+    except:
+        playlist = []
+
 
 
 #    for episode in recently_added_episode_results:
