@@ -10,19 +10,21 @@
 						<h3 class="panel-title">Recently Added TV Shows</h3>
 					</div>
 					<div class="panel-body">
-						<ul class="media-list">
+						<ul class="media-list recent-episodes">
 						{% for episode in recently_added_episodes %}
 							<li class="media">
+								<div>
 							<div class="media-left">
 								<a href="#">
-									<img class="media-object" data-src="holder.js/170x96" alt="Generic placeholder image">
+									<img class="media-object" width="170" height="96" ddddata-sarc="holder.js/170x96" src="http://localhost:8080/image/{{ episode.thumbnail|urlencode }}" alt="Generic placeholder image">
 									</a>
 								</div>
 
 								<div class="media-body">
-									<h4 class="media-heading">Elementary</h4>
-									<em>Season 2 - Episode 5 (1/12/15)</em>
-									<p>Sherlock and friends investigate a murder. Captain Gregson eats a banana.</p>
+									<h4 class="show-title media-heading">{{episode.showtitle}}</h4>
+									<p class="episode-title">{{ episode.title }}</p>
+									<p class="episode-num">Season {{episode.season}} - Episode {{episode.episode}} ({{episode.firstaired}})</p>
+									<p class="episode-desc">{{ episode.plot }}</p>
 									<div class="btn-group">
 										<button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
 										<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Queue</button>
@@ -34,6 +36,7 @@
 							</div>	
 						</li>
 						{% endfor %}
+					</ul>
 						</div>
 					</div>
 				</div>

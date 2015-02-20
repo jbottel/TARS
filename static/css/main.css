@@ -40,3 +40,25 @@ a { cursor: pointer; }
 	width: 900px;
 }
 
+.episode-title {
+	margin: 0 !important;
+	padding: 0;
+}
+.show-title {
+	margin: 0 !important;
+	padding: 0;
+}
+.episode-num {
+	font-size: 80%;
+	margin: 0 !important;
+	font-style: italic;
+}
+.episode-desc {
+	padding-top: 5px;
+}
+
+ul.recent-episodes li {
+	padding-bottom: 15px;
+	padding-top: 5px;
+	border-bottom: dotted #444 1px;
+}

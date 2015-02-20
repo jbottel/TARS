@@ -6,9 +6,13 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     try:
-        recently_added_episodes = xbmc.VideoLibrary.GetRecentlyAddedEpisodes()
+        recently_added_episodes = xbmc.VideoLibrary.GetRecentlyAddedEpisodes(
+                {"properties":["showtitle","title","episode","season","firstaired","plot","thumbnail"],"limits":{"end":5}})["result"]["episodes"]
     except:
         recently_added_episodes = []
+
+#    for episode in recently_added_episode_results:
+#        episode_details = xbmc.VideoLibrary.Get
     return render_template('index.html',**locals())
 
 @app.route('/remote')
@@ -113,5 +117,5 @@ def are_players_active():
         return True
 
 if __name__ == '__main__':
-    xbmc = XBMC("http://192.168.1.2:8080/jsonrpc")
+    xbmc = XBMC("http://localhost:8080/jsonrpc")
     app.run(debug=True,host='0.0.0.0')
