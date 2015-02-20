@@ -62,3 +62,9 @@ ul.recent-episodes li {
 	padding-top: 5px;
 	border-bottom: dotted #444 1px;
 }
+
+p.movie-cast {
+	font-size: 80%;
+	margin: 0 !important;
+	font-style: italic;
+}

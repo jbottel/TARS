@@ -11,6 +11,14 @@ def index():
     except:
         recently_added_episodes = []
 
+    try:
+        recently_added_movies = xbmc.VideoLibrary.GetRecentlyAddedMovies(
+                {"properties":["originaltitle","year","plot","thumbnail","cast"],"limits":{"end":5}})["result"]["movies"]
+    except:
+        recently_added_movies = []
+
+
+
 #    for episode in recently_added_episode_results:
 #        episode_details = xbmc.VideoLibrary.Get
     return render_template('index.html',**locals())

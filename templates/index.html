@@ -11,32 +11,32 @@
 					</div>
 					<div class="panel-body">
 						<ul class="media-list recent-episodes">
-						{% for episode in recently_added_episodes %}
-							<li class="media">
-								<div>
-							<div class="media-left">
-								<a href="#">
-									<img class="media-object" width="170" height="96" ddddata-sarc="holder.js/170x96" src="http://localhost:8080/image/{{ episode.thumbnail|urlencode }}" alt="Generic placeholder image">
-									</a>
-								</div>
+							{% for episode in recently_added_episodes %}
+								<li class="media">
+									<div>
+										<div class="media-left">
+											<a href="#">
+												<img class="media-object" width="170" height="96" ddddata-sarc="holder.js/170x96" src="http://localhost:8080/image/{{ episode.thumbnail|urlencode }}" alt="Generic placeholder image">
+												</a>
+											</div>
 
-								<div class="media-body">
-									<h4 class="show-title media-heading">{{episode.showtitle}}</h4>
-									<p class="episode-title">{{ episode.title }}</p>
-									<p class="episode-num">Season {{episode.season}} - Episode {{episode.episode}} ({{episode.firstaired}})</p>
-									<p class="episode-desc">{{ episode.plot }}</p>
-									<div class="btn-group">
-										<button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
-										<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Queue</button>
-										<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
-									</div>
+											<div class="media-body">
+												<h4 class="show-title media-heading">{{episode.showtitle}}</h4>
+												<p class="episode-title">{{ episode.title }}</p>
+												<p class="episode-num">Season {{episode.season}} - Episode {{episode.episode}} ({{episode.firstaired}})</p>
+												<p class="episode-desc">{{ episode.plot }}</p>
+												<div class="btn-group">
+													<button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+													<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Queue</button>
+													<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
+												</div>
 
-								</div>
+											</div>
 
-							</div>	
-						</li>
-						{% endfor %}
-					</ul>
+										</div>	
+									</li>
+								{% endfor %}
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -46,16 +46,24 @@
 							<h3 class="panel-title">Recently Added Movies</h3>
 						</div>
 						<div class="panel-body">
-							<div class="media">
+							<ul class="media-list">
+							{% for movie in recently_added_movies %} 
+								<li class="media">
+									<div>
 								<div class="media-left">
 									<a href="#">
-										<img class="media-object" data-src="holder.js/80x120" alt="Generic placeholder image">
+										<img class="media-object" width="80" height="120" src="http://localhost:8080/image/{{ movie.thumbnail|urlencode }}" alt="Generic placeholder image">
 										</a>
 									</div>
 
 									<div class="media-body">
-										<h4 class="media-heading">Jurassic Park</h4>
-										<p>Leon Jones, Bobbity Smith, Will Smith, Joe the Plumber</p>
+										<h4 class="media-heading">{{ movie.originaltitle }}</h4>
+										<p class="movie-cast">
+											{% for cast in movie.cast[:3] %}
+												{{cast.name}}{% if not loop.last %}, {% endif %}
+											{%endfor%}
+										</p>
+										<p class="movie-desc">{{ movie.plot|truncate(180) }}</p>
 										<div class="btn-group">
 											<button type="button" class="btn btn-success btn-xs">Play</button>
 											<button type="button" class="btn btn-default btn-xs">Queue</button>
@@ -64,7 +72,11 @@
 										</div>
 
 									</div>
-								</div>					</div>
+								</div>
+							</li>
+							{% endfor %}
+							</ul>
+						</div>
 						</div>
 					</div>
 
