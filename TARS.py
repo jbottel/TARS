@@ -5,7 +5,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        recently_added_episodes = xbmc.VideoLibrary.GetRecentlyAddedEpisodes()
+    except:
+        recently_added_episodes = []
+    return render_template('index.html',**locals())
 
 @app.route('/remote')
 def remote():

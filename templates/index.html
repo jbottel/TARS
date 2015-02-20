@@ -10,7 +10,9 @@
 						<h3 class="panel-title">Recently Added TV Shows</h3>
 					</div>
 					<div class="panel-body">
-						<div class="media-list">
+						<ul class="media-list">
+						{% for episode in recently_added_episodes %}
+							<li class="media">
 							<div class="media-left">
 								<a href="#">
 									<img class="media-object" data-src="holder.js/170x96" alt="Generic placeholder image">
@@ -30,6 +32,8 @@
 								</div>
 
 							</div>	
+						</li>
+						{% endfor %}
 						</div>
 					</div>
 				</div>
