@@ -13,7 +13,7 @@ def index():
 
     try:
         recently_added_movies = xbmc.VideoLibrary.GetRecentlyAddedMovies(
-                {"properties":["originaltitle","year","plot","thumbnail","cast"],"limits":{"end":5}})["result"]["movies"]
+                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber"],"limits":{"end":5}})["result"]["movies"]
     except:
         recently_added_movies = []
 
@@ -130,6 +130,29 @@ def remote_players():
 def are_players_active():
     if xbmc.Player.GetActivePlayers()["result"]:
         return True
+
+@app.route('/play/movie/<int:movie_id>')
+def play_movie(movie_id):
+    xbmc.Playlist.Add({'item':{'movieid': movie_id},'playlistid':1})
+    xbmc.Player.Open({'item':{'movieid': movie_id}})
+    return ''
+
+@app.route('/enqueue/movie/<int:movie_id>')
+def enqueue_movie(episode_id):
+    xbmc.Playlist.Add({'item':{'movieid': movie_id},'playlistid':1})
+    return ''
+
+@app.route('/play/episode/<int:episode_id>')
+def play_episode(episode_id):
+    xbmc.Playlist.Add({'item':{'episodeid': episode_id},'playlistid':1})
+    xbmc.Player.Open({'item':{'episodeid': episode_id}})
+    return ''
+
+@app.route('/enqueue/episode/<int:episode_id>')
+def enqueue_episode(episode_id):
+    xbmc.Playlist.Add({'item':{'episodeid': episode_id},'playlistid':1})
+    return ''
+
 
 if __name__ == '__main__':
     xbmc = XBMC("http://localhost:8080/jsonrpc")

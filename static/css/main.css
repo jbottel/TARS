@@ -68,3 +68,11 @@ p.movie-cast {
 	margin: 0 !important;
 	font-style: italic;
 }
+
+div.image-placeholder {
+	background-color: #272b30;
+}
+
+div.image-placeholder img {
+	border: none;
+}

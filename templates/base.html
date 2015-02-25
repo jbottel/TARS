@@ -86,6 +86,21 @@
 							precision: 2,
 							value: 8.115 // Slider will instantiate showing 8.12 due to specified precision
 						});
+						$(".imdbOpen").click(function() {
+							window.open("//imdb.com/title/" + $(this).attr("data-imdb-number"));
+						});
+						$(".playMovie").click(function() {
+							$.get("/play/movie/" + $(this).attr("data-movie-id"));
+						});
+						$(".enqueueMovie").click(function() {
+							$.get("/enqueue/movie/" + $(this).attr("data-movie-id"));
+						});
+						$(".playEpisode").click(function() {
+							$.get("/play/episode/" + $(this).attr("data-episode-id"));
+						});
+						$(".enqueueEpisode").click(function() {
+							$.get("/enqueue/episode/" + $(this).attr("data-episode-id"));
+						});
 						});
 					</script>
 					{%- endblock scripts %}
