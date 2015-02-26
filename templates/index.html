@@ -24,7 +24,7 @@
 												<h4 class="show-title media-heading">{{episode.showtitle}}</h4>
 												<p class="episode-title">{{ episode.title }}</p>
 												<p class="episode-num">Season {{episode.season}} - Episode {{episode.episode}} ({{episode.firstaired}})</p>
-												<p class="episode-desc">{{ episode.plot }}</p>
+												<p class="episode-desc">{{ episode.plot|truncate(190) }}</p>
 												<div class="btn-group">
 													<button type="button" data-episode-id="{{ episode.episodeid }}" class="playEpisode btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
 													<button type="button" data-episode-id="{{ episode.episodeid }}" class="enqueueEpisode btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
