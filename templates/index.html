@@ -16,7 +16,7 @@
 									<div>
 										<div class="media-left">
 											<div class="holderjs image-placeholder" style="width:170px; height: 96px;" data-background-src="?holder.js/170x96/industrial/#272b30:#c8c8c8/text:{{episode.showtitle}}">
-													<img class="media-object" width="170" height="96" src="http://localhost:8080/image/{{ episode.thumbnail|urlencode }}" onerror='this.style.display = "none"'>
+													<img class="media-object" width="170" height="96" src="http://192.168.1.2:8080/image/{{ episode.thumbnail|urlencode }}" onerror='this.style.display = "none"'>
 										</div>
 											</div>
 
@@ -53,7 +53,7 @@
 								<div class="media-left">
 									<a href="#">
 										<div class="image-placeholder" style="width:80px; height: 80px;">
-										<img class="media-object" width="80" height="120" src="http://localhost:8080/image/{{ movie.thumbnail|urlencode }}" alt="Generic placeholder image">
+										<img class="media-object" width="80" height="120" src="http://192.168.1.2:8080/image/{{ movie.thumbnail|urlencode }}" alt="Generic placeholder image">
 										</div>
 										</a>
 									</div>
@@ -67,9 +67,9 @@
 										</p>
 										<p class="movie-desc">{{ movie.plot|truncate(150) }}</p>
 										<div class="btn-group">
-											<button data-movie-id="{{movie.movieid}}" type="button" class="playMovie btn btn-success btn-xs">Play</button>
-											<button type="button" class="btn btn-default btn-xs">Queue</button>
-											<button type="button" class="btn btn-default btn-xs">Info</button>
+											<button data-movie-id="{{movie.movieid}}" type="button" class="playMovie btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+											<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
+											<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
 											<button data-imdb-number="{{movie.imdbnumber}}" type="button" class="imdbOpen btn btn-default btn-xs">IMDb</button>
 											<button type="button" class="btn btn-default btn-xs">Trailer</button>
 										</div>

@@ -155,5 +155,5 @@ def enqueue_episode(episode_id):
 
 
 if __name__ == '__main__':
-    xbmc = XBMC("http://localhost:8080/jsonrpc")
+    xbmc = XBMC("http://192.168.1.2:8080/jsonrpc")
     app.run(debug=True,host='0.0.0.0')
