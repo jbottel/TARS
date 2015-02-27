@@ -101,6 +101,9 @@
 						$(".enqueueEpisode").click(function() {
 							$.get("/enqueue/episode/" + $(this).attr("data-episode-id"));
 						});
+						$(".trailerMovie").click(function() {
+							$.get("/play/trailer/" + $(this).attr("data-movie-id"));
+						});
 						});
 					</script>
 					{%- endblock scripts %}

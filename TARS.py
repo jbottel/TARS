@@ -167,6 +167,13 @@ def enqueue_episode(episode_id):
     xbmc.Playlist.Add({'item':{'episodeid': episode_id},'playlistid':1})
     return ''
 
+@app.route('/play/trailer/<int:movie_id>')
+def play_trailer(movie_id):
+    details = xbmc.VideoLibrary.GetMovieDetails({"movieid": movie_id,"properties":["trailer"]})
+    trailer = details["result"]["moviedetails"]["trailer"]
+    xbmc.Player.Open({'item':{'file': trailer}})
+    return ''
+
 
 if __name__ == '__main__':
     xbmc = XBMC("http://192.168.1.2:8080/jsonrpc")
