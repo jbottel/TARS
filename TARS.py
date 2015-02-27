@@ -34,7 +34,7 @@ def index():
 def movies():
     try:
         recently_added_movies_list = xbmc.VideoLibrary.GetRecentlyAddedMovies(
-                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber"],"limits":{"end":15}})["result"]["movies"]
+                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"],"limits":{"end":15}})["result"]["movies"]
         recently_added_movies  = [recently_added_movies_list[i:i+3] for i in range(0, len(recently_added_movies_list), 3)]
 
 

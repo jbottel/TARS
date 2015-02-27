@@ -28,7 +28,7 @@
 												<div class="btn-group">
 													<button type="button" data-episode-id="{{ episode.episodeid }}" class="playEpisode btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
 													<button type="button" data-episode-id="{{ episode.episodeid }}" class="enqueueEpisode btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
-													<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
+													<button type="button" data-episode-id="{{ episode.episodeid }}" class="infoEpisode btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
 												</div>
 
 											</div>
@@ -68,10 +68,10 @@
 										<p class="movie-desc">{{ movie.plot|truncate(150) }}</p>
 										<div class="btn-group">
 											<button data-movie-id="{{movie.movieid}}" type="button" class="playMovie btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
-											<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
-											<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
+											<button data-movie-id="{{movie.movieid}}" type="button" class="enqueueMovie btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
+											<button data-movie-id="{{movie.movieid}}" type="button" class="btn btn-default btn-xs"><span class="infoMovie glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
 											<button data-imdb-number="{{movie.imdbnumber}}" type="button" class="imdbOpen btn btn-default btn-xs">IMDb</button>
-											<button type="button" class="btn btn-default btn-xs">Trailer</button>
+											<button type="button" data-movie-id="{{movie.movieid}}" data-trailer-id="{{movie.trailer}}" class="trailerMovie btn btn-default btn-xs">Trailer</button>
 										</div>
 
 									</div>
