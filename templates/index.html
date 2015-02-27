@@ -95,7 +95,7 @@
 								</thead>
 								<tbody>
 									{% for item in video_playlist %}
-										<tr> <td>{{ item.id }}</td><td>{{ item.title }}</td><td>{{ item.runtime }}
+										<tr> <td>{{ item.id }}</td><td>{{ item.title }}</td><td>{{ item.runtime // 60 }}
 									{% endfor %}
 								</tbody>
 

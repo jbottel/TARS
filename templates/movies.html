@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}TARS - Movies{% endblock %}
+
+{% block content %}
+	<div class="container-fluid">
+		<ol class="breadcrumb">
+			<li><a href="#">Home</a></li>
+			<li class="active">Movies</li>
+		</ol>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Browse by ... </h3>
+					</div>
+					<div class="list-group">
+						<a href="#" class="list-group-item">Title</a>
+						<a href="#" class="list-group-item">Genre</a>
+						<a href="#" class="list-group-item">Collection</a>
+						<a href="#" class="list-group-item">Year</a>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Recently Added Movies</h3>
+					</div>
+					<div class="panel-body">
+													{% for row in recently_added_movies %}
+						<div class="row">
+						{% for movie in row %}
+							<div class="col-md-4">
+						<div class="thumbnail">
+										<img class="media-object" width="120" height="180" src="http://192.168.1.2:8080/image/{{ movie.thumbnail|urlencode }}" alt="Generic placeholder image">
+							<div class="caption">
+								<div class="text-center">
+																<h4>{{ movie.originaltitle }}</h4>
+																<p class="movie-cast">
+											{% for cast in movie.cast[:5] %}
+												{{cast.name}}{% if not loop.last %}, {% endif %}
+											{%endfor%}
+										</p>
+										<p></p>
+										<p class="movie-desc" style="font-size:85%;">{{ movie.plot|truncate(350) }}</p>
+<div class="btn-group">
+													<button type="button" data-episode-id="{{ movie.movieid }}" class="playEpisode btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+													<button type="button" data-episode-id="{{ movie.movieid }}" class="enqueueEpisode btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
+													<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
+												</div>
+				</div>
+
+
+							</div>
+						</div>
+					</div><!-- end col -->
+					{% endfor %}
+				</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

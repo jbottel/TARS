@@ -30,6 +30,20 @@ def index():
 #        episode_details = xbmc.VideoLibrary.Get
     return render_template('index.html',**locals())
 
+@app.route("/movies")
+def movies():
+    try:
+        recently_added_movies_list = xbmc.VideoLibrary.GetRecentlyAddedMovies(
+                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber"],"limits":{"end":15}})["result"]["movies"]
+        recently_added_movies  = [recently_added_movies_list[i:i+3] for i in range(0, len(recently_added_movies_list), 3)]
+
+
+    except:
+        recently_added_movies = []
+    return render_template('movies.html',**locals())
+
+
+
 @app.route('/remote')
 def remote():
     return render_template('remote.html')
