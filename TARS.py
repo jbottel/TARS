@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template
+from flask import jsonify
 from xbmcjson import XBMC, PLAYER_VIDEO
 app = Flask(__name__)
 
@@ -173,6 +174,11 @@ def play_trailer(movie_id):
     trailer = details["result"]["moviedetails"]["trailer"]
     xbmc.Player.Open({'item':{'file': trailer}})
     return ''
+
+@app.route('/get_properties')
+def get_properties():
+    properties = xbmc.Player.GetProperties({"playerid":1,"properties":["percentage"]})
+    return jsonify(properties)
 
 
 if __name__ == '__main__':

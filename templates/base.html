@@ -82,10 +82,7 @@
 							$("#remoteDiv").toggle();
 						});
 						$(document).ready(function() {	
-						$("#progressbar").slider({
-							precision: 2,
-							value: 8.115 // Slider will instantiate showing 8.12 due to specified precision
-						});
+						var pBar = $("#progressbar").slider();
 						$(".imdbOpen").click(function() {
 							window.open("//imdb.com/title/" + $(this).attr("data-imdb-number"));
 						});
@@ -104,6 +101,18 @@
 						$(".trailerMovie").click(function() {
 							$.get("/play/trailer/" + $(this).attr("data-movie-id"));
 						});
+
+						window.setInterval(function() {
+							updateSlider();
+						}, 5000);
+
+						function updateSlider() {
+							$.getJSON('/get_properties','',function(data) {
+							var max = pBar.slider('getAttribute','max');
+							var newVal = max * (data.result.percentage / 100);
+							pBar.slider('setValue',newVal);
+							});
+						}
 						});
 					</script>
 					{%- endblock scripts %}
