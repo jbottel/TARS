@@ -177,7 +177,12 @@ def play_trailer(movie_id):
 
 @app.route('/get_properties')
 def get_properties():
-    properties = xbmc.Player.GetProperties({"playerid":1,"properties":["percentage"]})
+    properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime"]})
+    return jsonify(properties)
+
+@app.route('/get_duration')
+def get_duration():
+    properties = xbmc.Player.GetProperties({"playerid":1,"properties":["totaltime"]})
     return jsonify(properties)
 
 

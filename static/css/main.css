@@ -7,7 +7,7 @@ a { cursor: pointer; }
 	height:210px;
 	right: 25px;
 	bottom: 55px;
-	position: absolute;
+	position: fixed;
 	z-index: 999;
 }
 
@@ -37,7 +37,7 @@ a { cursor: pointer; }
 }
 
 #progressbar {
-	width: 900px;
+	width: 800px;;
 }
 
 .episode-title {
@@ -75,4 +75,7 @@ div.image-placeholder {
 
 div.image-placeholder img {
 	border: none;
+}
+span#secdisp {
+								padding-right: 10px;
 }
