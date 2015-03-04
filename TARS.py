@@ -3,6 +3,7 @@ from flask import render_template
 from flask import jsonify
 from xbmcjson import XBMC, PLAYER_VIDEO
 app = Flask(__name__)
+app.config.from_object('settings')
 
 @app.route('/')
 def index():
@@ -187,5 +188,5 @@ def get_duration():
 
 
 if __name__ == '__main__':
-    xbmc = XBMC("http://localhost:8080/jsonrpc")
+    xbmc = XBMC(app.config["KODI_URI"]+"/jsonrpc")
     app.run(debug=True,host='0.0.0.0')

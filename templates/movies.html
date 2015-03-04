@@ -34,7 +34,7 @@
 						{% for movie in row %}
 							<div class="col-md-4">
 						<div class="thumbnail">
-										<img class="media-object" width="120" height="180" src="http://192.168.1.2:8080/image/{{ movie.thumbnail|urlencode }}" alt="Generic placeholder image">
+														<img class="media-object" width="120" height="180" src="{{ config.KODI_URI }}/image/{{ movie.thumbnail|urlencode }}" alt="Generic placeholder image">
 							<div class="caption">
 								<div class="text-center">
 																<h4>{{ movie.originaltitle }}</h4>
