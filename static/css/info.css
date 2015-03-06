@@ -1,0 +1,17 @@
+.info-container {
+	width:880px;
+}
+
+#info-image {
+	width:240px;
+	float: left;
+}
+
+#info-details {
+	width: 640px;
+	float: left;
+	padding: 5px;
+	padding-left: 20px;
+}
+
+
