@@ -79,3 +79,7 @@ div.image-placeholder img {
 span#secdisp {
 								padding-right: 10px;
 }
+
+.info-iframe {
+								width: 900px;
+}

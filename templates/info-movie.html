@@ -1,0 +1,32 @@
+{% extends "info.html" %}
+{% block title %}Movie Info{% endblock %}
+
+{% block content %}
+<div class="info-container">
+		<div id="info-image">
+			<img width="100%" src="{{ config.KODI_URI }}/image/{{ movie.thumbnail|urlencode }}">
+
+		</div>
+		<div id="info-details">
+			<h3>{{ movie.originaltitle }}</h3>
+			<p>{{ movie.year }} &middot; {{ movie.runtime }} &middot; {{ movie.genre|join(', ')}} &middot; {{ movie.mpaa }}</p>
+			<p>Director: {{ movie.director|join(', ') }} </p>
+			<p style="font-size: 85%">
+				{% for cast in movie.cast[:5] %}
+				{{ cast.name }} as <em>{{cast.role }}</em><br>
+				{% endfor %}
+			</p>
+
+			<p> {{ movie.plot }} </p>
+			<div class="btn-group">
+											<button data-movie-id="{{movieid}}" type="button" class="playMovie btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+											<button data-movie-id="{{movieid}}" type="button" class="enqueueMovie btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
+											<button data-imdb-number="{{movie.imdbnumber}}" type="button" class="imdbOpen btn btn-default btn-xs">IMDb</button>
+											<button type="button" data-movie-id="{{movieid}}" data-trailer-id="{{movie.trailer}}" class="trailerMovie btn btn-default btn-xs">Trailer</button>
+										</div>
+
+
+		</div>
+		<div style="clear: both;"></div>
+</div>
+{% endblock %}
