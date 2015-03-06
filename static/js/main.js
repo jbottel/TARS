@@ -1,28 +1,16 @@
 $(document).ready(function() {	
+								$('.infoMovie').on('click', function(e) {
+																var src = "/info/movie/" + $(this).attr('data-movie-id');
+																$("#infoModal iframe").attr({'src':src});
+								});
+								$(".info-iframe").load(function() {
+																    $(this).css("height", $(this).contents().height() + "px");
+								});
 								$("#remote-button").click(function() {
 																$("#remoteDiv").toggle();
 								});
 								var pBar = $("#progressbar").slider();
-								$(".imdbOpen").click(function() {
-																window.open("//imdb.com/title/" + $(this).attr("data-imdb-number"));
-								});
-								$(".playMovie").click(function() {
-																$.get("/play/movie/" + $(this).attr("data-movie-id"));
-								});
-								$(".enqueueMovie").click(function() {
-																$.get("/enqueue/movie/" + $(this).attr("data-movie-id"));
-								});
-								$(".playEpisode").click(function() {
-																$.get("/play/episode/" + $(this).attr("data-episode-id"));
-								});
-								$(".enqueueEpisode").click(function() {
-																$.get("/enqueue/episode/" + $(this).attr("data-episode-id"));
-								});
-								$(".trailerMovie").click(function() {
-																$.get("/play/trailer/" + $(this).attr("data-movie-id"));
-								});
-
-								window.setInterval(function() {
+												window.setInterval(function() {
 																updateSlider();
 								}, 2500);
 
