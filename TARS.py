@@ -177,6 +177,21 @@ def play_trailer(movie_id):
     return ''
 
 
+def format_runtime(item_runtime):
+    """Format a runtime in seconds to a human readable format in hours and minutes"""
+    if item_runtime > 3600:
+        hours = item_runtime/3600
+        minutes = item_runtime/60 - (hours*60)
+        if minutes == 0:
+            newruntime = str(hours) + " hr "
+        else:
+            newruntime = str(hours) + " hr " + str(minutes) + " min" 
+    else: 
+        minutes = item_runtime/60
+        newruntime = str(minutes) + " min"
+
+    return newruntime
+
 @app.route('/info/movie/<int:movie_id>')
 def info_movie(movie_id):
     props = ["thumbnail","originaltitle","year","runtime","genre",
@@ -187,19 +202,9 @@ def info_movie(movie_id):
     # Format MPAA Rating to remove "Rating"
     movie["mpaa"] = movie["mpaa"].replace("Rated","",1)
 
-    # Format the movie runtime into a human readable format (TODO: separate function)
-    runtime = movie["runtime"]
-    if runtime > 3600:
-        hours = runtime/3600
-        minutes = runtime/60 - (hours*60)
-        if minutes == 0:
-            newruntime = str(hours) + " hr "
-        else:
-            newruntime = str(hours) + " hr " + str(minutes) + " min" 
-    else: 
-        minutes = runtime/60
-        newruntime = str(minutes) + " min"
-    movie["runtime"] = newruntime
+    # Format the movie runtime into a human readable format
+    movie["runtime"] = format_runtime(movie["runtime"])
+
     return render_template('info-movie.html',**locals())
 
 @app.route('/info/episode/<int:episode_id>')
@@ -208,19 +213,9 @@ def info_episode(episode_id):
     details = xbmc.VideoLibrary.GetEpisodeDetails({"episodeid": episode_id,"properties":props})
     episode = details["result"]["episodedetails"]
 
-    # Format the movie runtime into a human readable format (TODO: separate function)
-    runtime = episode["runtime"]
-    if runtime > 3600:
-        hours = runtime/3600
-        minutes = runtime/60 - (hours*60)
-        if minutes == 0:
-            newruntime = str(hours) + " hr "
-        else:
-            newruntime = str(hours) + " hr " + str(minutes) + " min" 
-    else: 
-        minutes = runtime/60
-        newruntime = str(minutes) + " min"
-    episode["runtime"] = newruntime
+    # Format the movie runtime into a human readable format
+    episode["runtime"] = format_runtime(episode["runtime"])
+
     return render_template('info-episode.html',**locals())
 
 
