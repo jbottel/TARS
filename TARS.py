@@ -202,6 +202,28 @@ def info_movie(movie_id):
     movie["runtime"] = newruntime
     return render_template('info-movie.html',**locals())
 
+@app.route('/info/episode/<int:episode_id>')
+def info_episode(episode_id):
+    props = ["thumbnail","showtitle","title","plot","cast","runtime","season","episode","firstaired"]
+    details = xbmc.VideoLibrary.GetEpisodeDetails({"episodeid": episode_id,"properties":props})
+    episode = details["result"]["episodedetails"]
+
+    # Format the movie runtime into a human readable format (TODO: separate function)
+    runtime = episode["runtime"]
+    if runtime > 3600:
+        hours = runtime/3600
+        minutes = runtime/60 - (hours*60)
+        if minutes == 0:
+            newruntime = str(hours) + " hr "
+        else:
+            newruntime = str(hours) + " hr " + str(minutes) + " min" 
+    else: 
+        minutes = runtime/60
+        newruntime = str(minutes) + " min"
+    episode["runtime"] = newruntime
+    return render_template('info-episode.html',**locals())
+
+
 @app.route('/get_properties')
 def get_properties():
     properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime"]})

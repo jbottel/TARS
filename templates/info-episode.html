@@ -1,0 +1,32 @@
+{% extends "info.html" %}
+{% block title %}Episode Info{% endblock %}
+
+{% block content %}
+<div class="info-container">
+		<div id="info-image">
+			<img width="100%" src="{{ config.KODI_URI }}/image/{{ episode.thumbnail|urlencode }}">
+
+		</div>
+		<div id="info-details">
+			<h3>{{ episode.title }}</h3>
+			<p> {{ episode.showtitle }}</p>
+			<p>Season {{ episode.season }} - Episode {{ episode.episode }} ({{episode.firstaired}}) <br>
+			Runtime: {{ episode.runtime }} 	
+			</p>
+			<p style="font-size: 85%">
+				{% for cast in episode.cast[:5] %}
+				{{ cast.name }} as <em>{{cast.role }}</em><br>
+				{% endfor %}
+			</p>
+
+			<p> {{ episode.plot }} </p>
+			<div class="btn-group">
+											<button data-episode-id="{{episodeid}}" type="button" class="playEpisode btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+											<button data-episode-id="{{episodeid}}" type="button" class="enqueueEpisode btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
+										</div>
+
+
+		</div>
+		<div style="clear: both;"></div>
+</div>
+{% endblock %}

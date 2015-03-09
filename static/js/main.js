@@ -3,6 +3,10 @@ $(document).ready(function() {
 																var src = "/info/movie/" + $(this).attr('data-movie-id');
 																$("#infoModal iframe").attr({'src':src});
 								});
+								$('.infoEpisode').on('click', function(e) {
+																var src = "/info/episode/" + $(this).attr('data-episode-id');
+																$("#infoModal iframe").attr({'src':src});
+								});
 								$(".info-iframe").load(function() {
 																    $(this).css("height", $(this).contents().height() + "px");
 								});
