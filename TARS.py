@@ -143,6 +143,16 @@ def remote_players():
     else:
         return 'nah'
 
+@app.route('/seek/<int:seek_value>')
+def seek_player(seek_value):
+    seek_value = seek_value * 5
+    hours = seek_value / 3600
+    minutes = (seek_value - (hours*3600))/60
+    seconds = seek_value - hours*3600 - minutes*60
+    position = { 'hours': hours, 'minutes': minutes, 'seconds': seconds }
+    print xbmc.Player.Seek({'playerid':1,'value':position})
+    return ''
+
 def are_players_active():
     if xbmc.Player.GetActivePlayers()["result"]:
         return True
