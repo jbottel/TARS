@@ -101,21 +101,21 @@
 							<table class="table table-striped">
 								<thead>
 									<tr><th colspan="2">Video</th></tr>
-									<tr><th>#</th><th>Title</th><th>Duration</th></tr>
+									<tr><th>Title</th><th>Duration</th></tr>
 								</thead>
 								<tbody>
 									{% for item in video_playlist %}
-										<tr> <td>{{ item.id }}</td><td>{{ item.title }}</td><td>{{ item.runtime // 60 }}
+										<tr><td>{{ item.title }}</td><td>{{ item.runtime }}</td></tr>
 									{% endfor %}
 								</tbody>
 
 								<thead>
 									<tr><th colspan="2">Audio</th></tr>
-									<tr><th>#</th><th>Title</th><th>Duration</th></tr>
+									<tr><th>Title</th><th>Duration</th></tr>
 								</thead>
 								<tbody>
 									{% for item in audio_playlist %}
-										<tr> <td>{{ item.id }}</td><td>{{ item.title }}</td><td>{{ item.duration // 60}}:{{ item.duration - (60 * (item.duration // 60))}}</td> </tr>
+										<tr><td>{{ item.title }}</td><td>{{ item.duration }}</td> </tr>
 									{% endfor %}
 								</tbody>
 							</table>

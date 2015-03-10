@@ -20,11 +20,29 @@ def index():
         recently_added_movies = []
 
     try:
-        video_playlist = xbmc.Playlist.GetItems({"properties":["runtime","showtitle","title"], "playlistid":1})["result"]["items"]
-        audio_playlist = xbmc.Playlist.GetItems({"properties":["duration","artist","title"], "playlistid":0})["result"]["items"]
-        playlist = video_playlist + audio_playlist
+        video_playlist_result = xbmc.Playlist.GetItems({"properties":["runtime","showtitle","title"], "playlistid":1})
+        video_playlist = video_playlist_result["result"]["items"]
     except:
-        playlist = []
+        video_playlist = []
+
+    try:
+        audio_playlist_result = xbmc.Playlist.GetItems({"properties":["duration","artist","title"], "playlistid":0})
+        audio_playlist = audio_playlist_result["result"]["items"]
+    except:
+        audio_playlist = []
+
+    for item in video_playlist:
+        try:
+            item["runtime"] = format_runtime(item["runtime"],"colon")
+        except:
+            item["runtime"] = "Unknown"
+        
+
+    for item in audio_playlist:
+        try:
+            item["duration"] = format_runtime(item["duration"],"colon")
+        except:
+            item["duration"] = "Unknown"
 
     return render_template('index.html',**locals())
 
@@ -232,18 +250,36 @@ def play_trailer(movie_id):
     return ''
 
 
-def format_runtime(item_runtime):
-    """Format a runtime in seconds to a human readable format in hours and minutes"""
-    if item_runtime > 3600:
-        hours = item_runtime/3600
-        minutes = item_runtime/60 - (hours*60)
-        if minutes == 0:
-            newruntime = str(hours) + " hr "
-        else:
-            newruntime = str(hours) + " hr " + str(minutes) + " min" 
-    else: 
-        minutes = item_runtime/60
-        newruntime = str(minutes) + " min"
+def format_runtime(item_runtime, format="text"):
+    """Format a runtime in seconds to a human readable format in hours and minutes
+    
+    Takes a "format" argument that specifies whether the function should return:
+    "text" -- "2 hr 7 min"
+    "colon" -- "2:07:00"
+
+    """
+    if format == "text":
+        if item_runtime > 3600:
+            hours = item_runtime/3600
+            minutes = item_runtime/60 - (hours*60)
+            if minutes == 0:
+                newruntime = str(hours) + " hr "
+            else:
+                newruntime = str(hours) + " hr " + str(minutes) + " min" 
+        else: 
+            minutes = item_runtime/60
+            seconds = item_runtime - minutes*60
+            newruntime = str(minutes) + " min "+ str(seconds) + " sec"
+    if format == "colon":
+        if item_runtime > 3600:
+            hours = item_runtime/3600
+            minutes = item_runtime/60 - (hours*60)
+            seconds = item_runtime - minutes * 60 - hours * 3600
+            newruntime = str(hours) + ":" + str(minutes).zfill(2) + ":" + str(seconds).zfill(2)
+        else: 
+            minutes = item_runtime/60
+            seconds = item_runtime - minutes*60
+            newruntime = str(minutes) + ":" + str(seconds).zfill(2)
 
     return newruntime
 
