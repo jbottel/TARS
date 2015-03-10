@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}TARS - Movies{% endblock %}
+
+{% block content %}
+<!-- info modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<iframe frameborder="0" class="info-iframe"></iframe>
+</div>
+</div>
+</div>
+<!-- end info modal -->
+
+	<div class="container-fluid">
+		<ol class="breadcrumb">
+			<li><a href="#">Home</a></li>
+			<li><a href="/movies">Movies</a></li>
+			<li><a href="/movies/genre">By Genre</a></li>
+			<li class="active">{{this_genre}}</li>
+		</ol>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Genres</h3>
+					</div>
+					<div class="list-group">
+						{% for genre in genres %}
+							<a href="/movies/genre/{{ genre.genreid }}" class="list-group-item">{{ genre.label }}</a>
+						
+						{% endfor %}
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"> {{ this_genre }} Movies {%if movies %}({{ movies|length}}){% endif %}</h3>
+					</div>
+					{% if not movies %}
+					<div class="panel-body">
+						<p>Please choose a genre from the left.</p>
+					</div>
+					{% else %}
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for movie in movies %}
+									<tr>
+										<td> {{ movie.originaltitle }} ({{ movie.year }}) </td>
+										<td style="text-align: right;">										<div class="btn-group">
+											<button data-movie-id="{{movie.movieid}}" type="button" class="playMovie btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+											<button data-movie-id="{{movie.movieid}}" type="button" class="enqueueMovie btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
+											<button data-movie-id="{{movie.movieid}}" type="button" data-toggle="modal" data-target="#infoModal" class="infoMovie btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
+											<button data-imdb-number="{{movie.imdbnumber}}" type="button" class="imdbOpen btn btn-default btn-xs">IMDb</button>
+											<button type="button" data-movie-id="{{movie.movieid}}" data-trailer-id="{{movie.trailer}}" class="trailerMovie btn btn-default btn-xs">Trailer</button>
+										</div>
+</td>
+									</tr>
+								{% endfor %}
+						</table>
+					{% endif %}
+
+
+
+				</div>
+
+
+							</div>
+						</div>
+					</div><!-- end col -->
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

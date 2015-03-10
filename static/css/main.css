@@ -83,3 +83,7 @@ span#secdisp {
 .info-iframe {
 								width: 900px;
 }
+
+.row {
+	padding-bottom: 50px;
+}

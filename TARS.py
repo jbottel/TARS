@@ -26,10 +26,6 @@ def index():
     except:
         playlist = []
 
-
-
-#    for episode in recently_added_episode_results:
-#        episode_details = xbmc.VideoLibrary.Get
     return render_template('index.html',**locals())
 
 @app.route("/movies")
@@ -38,11 +34,60 @@ def movies():
         recently_added_movies_list = xbmc.VideoLibrary.GetRecentlyAddedMovies(
                 {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"],"limits":{"end":15}})["result"]["movies"]
         recently_added_movies  = [recently_added_movies_list[i:i+3] for i in range(0, len(recently_added_movies_list), 3)]
-
-
     except:
         recently_added_movies = []
+
     return render_template('movies.html',**locals())
+
+
+@app.route("/movies/title")
+def movies_by_title():
+    try:
+        movies = xbmc.VideoLibrary.GetMovies(
+                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"],"sort":{"order":"ascending","method":"title"}})["result"]["movies"]
+    except:
+        movies = []
+
+    return render_template('movies-by-title.html',**locals())
+
+@app.route("/movies/title/info")
+def movies_by_title_info():
+    try:
+        movies_list = xbmc.VideoLibrary.GetMovies(
+                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"],"sort":{"order":"ascending","method":"title"}})["result"]["movies"]
+        movies  = [movies_list[i:i+3] for i in range(0, len(movies_list), 3)]
+    except:
+        movies = []
+
+    return render_template('movies-by-title-info.html',**locals())
+
+@app.route("/movies/genre")
+def movies_by_genre():
+    try:
+        genres = xbmc.VideoLibrary.GetGenres({"type":"movie","sort":{"order":"ascending","method":"label"}})
+        genres = genres["result"]["genres"]
+    except:
+        genres = []
+    return render_template('movies-by-genre.html',**locals())
+
+@app.route("/movies/genre/<int:genre_id>")
+def get_movies_by_genre(genre_id):
+    try:
+        genres = xbmc.VideoLibrary.GetGenres({"type":"movie","sort":{"order":"ascending","method":"label"}})
+        genres = genres["result"]["genres"]
+
+        # Get label for current genre
+        for genre in genres:
+            if genre["genreid"] == genre_id: 
+                this_genre=genre["label"]
+
+        props = ["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer","genre"]
+        movies = xbmc.VideoLibrary.GetMovies({"properties":props,"filter":{"genreid":genre_id}})
+        movies = movies["result"]["movies"]
+    except:
+        genres = []
+    return render_template('movies-by-genre.html',**locals())
+
 
 
 

@@ -15,19 +15,19 @@
 	<div class="container-fluid">
 		<ol class="breadcrumb">
 			<li><a href="#">Home</a></li>
-			<li class="active">Movies</li>
+			<li><a href="/movies">Movies</a></li>
+			<li>By Title</li>
+			<li class="active">Media Info</li>
 		</ol>
 		<div class="row">
 			<div class="col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Browse by ... </h3>
+						<h3 class="panel-title">Style</h3>
 					</div>
 					<div class="list-group">
-						<a href="/movies/title" class="list-group-item">Title</a>
-						<a href="/movies/genre" class="list-group-item">Genre</a>
-						<a href="#" class="list-group-item">Collection</a>
-						<a href="#" class="list-group-item">Year</a>
+						<a href="/movies/title" class="list-group-item">List</a>
+						<a href="/movies/title/info" class="list-group-item">Media Info</a>
 
 					</div>
 				</div>
@@ -36,10 +36,10 @@
 			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Recently Added Movies</h3>
+						<h3 class="panel-title">Movies</h3>
 					</div>
 					<div class="panel-body">
-													{% for row in recently_added_movies %}
+													{% for row in movies %}
 						<div class="row">
 						{% for movie in row %}
 							<div class="col-md-4">
