@@ -132,7 +132,21 @@ def get_movies_by_set(set_id):
 
 
 
+@app.route("/tv-shows")
+def tv_shows():
+    try:
+        recently_added_episodes_list = xbmc.VideoLibrary.GetRecentlyAddedEpisodes(
+                {"properties":["showtitle","title","episode","season","firstaired","plot","thumbnail"],"limits":{"end":15}})["result"]["episodes"]
+        recently_added_episodes  = [recently_added_episodes_list[i:i+3] for i in range(0, len(recently_added_episodes_list), 3)]
+    except:
+        recently_added_episodes = []
 
+    try:
+        tv_shows_list = xbmc.VideoLibrary.GetTVShows({"sort":{"order":"ascending","method":"title"},"properties":["title","year"]})
+        tv_shows = tv_shows_list["result"]["tvshows"]
+    except:
+        tv_shows = []
+    return render_template('tv-shows.html',**locals())
 
 
 @app.route('/remote')

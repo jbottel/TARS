@@ -77,13 +77,27 @@ div.image-placeholder img {
 	border: none;
 }
 span#secdisp {
-								padding-right: 10px;
+	padding-right: 10px;
 }
 
 .info-iframe {
-								width: 900px;
+	width: 900px;
 }
 
 .row {
 	padding-bottom: 50px;
+}
+
+.tv-info-showtitle {
+	margin-top: 5px;
+	margin-bottom: 3px;
+}
+
+.tv-info-epititle {
+	margin: 0;	
+}
+.tv-info-epinum {
+	margin: 0;
+	font-size: 80%;
+	font-style: italic;
 }
