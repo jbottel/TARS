@@ -106,6 +106,32 @@ def get_movies_by_genre(genre_id):
         genres = []
     return render_template('movies-by-genre.html',**locals())
 
+@app.route("/movies/set")
+def movies_by_set():
+    try:
+        sets_list = xbmc.VideoLibrary.GetMovieSets({"sort":{"order":"ascending","method":"label"}})
+        sets = sets_list["result"]["sets"]
+    except:
+        sets = []
+    details = {"result":{"setdetails":{"movies":[]}}}
+    return render_template('movies-by-collection.html',**locals())
+
+@app.route("/movies/set/<int:set_id>")
+def get_movies_by_set(set_id):
+    try:
+        sets_list = xbmc.VideoLibrary.GetMovieSets({"sort":{"order":"ascending","method":"label"}})
+        sets = sets_list["result"]["sets"]
+    except:
+        sets = []
+    try:
+        details = xbmc.VideoLibrary.GetMovieSetDetails({"setid":set_id,"properties":["title","thumbnail"]})
+    except:
+        details = []
+
+    return render_template('movies-by-collection.html',**locals())
+
+
+
 
 
 

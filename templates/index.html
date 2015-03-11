@@ -70,11 +70,6 @@
 
 									<div class="media-body">
 										<h4 class="media-heading">{{ movie.originaltitle }}</h4>
-										<p class="movie-cast">
-											{% for cast in movie.cast[:3] %}
-												{{cast.name}}{% if not loop.last %}, {% endif %}
-											{%endfor%}
-										</p>
 										<p class="movie-desc">{{ movie.plot|truncate(150) }}</p>
 										<div class="btn-group">
 											<button data-movie-id="{{movie.movieid}}" type="button" class="playMovie btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
