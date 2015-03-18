@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}TARS - Movies{% endblock %}
+
+{% block content %}
+<!-- info modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<iframe frameborder="0" class="info-iframe"></iframe>
+</div>
+</div>
+</div>
+<!-- end info modal -->
+
+	<div class="container-fluid">
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li><a href="/tv-shows">TV Shows</a></li>
+			<li class="active">{{ show.label }}</li>
+		</ol>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">{{ show.label }}</h3>
+					</div>
+					<div class="list-group">
+						{% for season in seasons %}
+							<a href="/tv-shows/{{ show_id }}/{{ season.seasonid }}" class="list-group-item">{{ season.label }}</a>
+						{% endfor %}
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">{{ show.label }} - Most Recent Episodes</h3>
+					</div>
+					<div class="panel-body">
+													{% for row in episodes %}
+						<div class="row">
+						{% for episode in row %}
+							<div class="col-md-4">
+						<div class="thumbnail">
+														<img class="media-object" width="220" src="{{ config.KODI_URI }}/image/{{ episode.thumbnail|urlencode }}" alt="Generic placeholder image">
+							<div class="caption">
+								<div class="text-center">
+																<h4 class="tv-info-epititle">{{ episode.title }} </h4>
+																<p class="tv-info-epinum">Season {{ episode.season }} - Episode {{ episode.episode }} ({{ episode.firstaired }})</p>
+										<p></p>
+										<p class="movie-desc" style="font-size:85%;">{{ episode.plot|truncate(350) }}</p>
+<div class="btn-group">
+													<button type="button" data-episode-id="{{ episode.episodeid }}" class="playEpisode btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+													<button type="button" data-episode-id="{{ episode.episodeid }}" class="enqueueEpisode btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
+													<button type="button" data-episode-id="{{ episode.episodeid }}" data-toggle="modal" data-target="#infoModal" class="infoEpisode btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
+												</div>
+
+				</div>
+
+
+							</div>
+						</div>
+					</div><!-- end col -->
+					{% endfor %}
+				</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

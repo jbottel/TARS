@@ -148,6 +148,27 @@ def tv_shows():
         tv_shows = []
     return render_template('tv-shows.html',**locals())
 
+@app.route("/tv-shows/<int:show_id>")
+def tv_show_seasons(show_id):
+
+    try:
+        show = xbmc.VideoLibrary.GetTVShowDetails({"tvshowid":show_id})["result"]["tvshowdetails"]
+    except:
+        show = {}
+
+    try:
+        episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid":show_id,"sort":{"order":"descending","method":"year"},"limits":{"end":15},"properties":["thumbnail","title","showtitle","season","episode","firstaired"]})
+        episodes_result = episodes_list["result"]["episodes"]
+        episodes  = [episodes_result[i:i+3] for i in range(0, len(episodes_result), 3)]
+    except:
+        episodes = []
+
+    try:
+        seasons = xbmc.VideoLibrary.GetSeasons({"tvshowid":show_id})
+        seasons = seasons["result"]["seasons"]
+    except:
+        seasons = []
+    return render_template('tv-show.html',**locals())
 
 @app.route('/remote')
 def remote():
