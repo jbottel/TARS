@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}TARS - Movies{% endblock %}
+{% block title %}TARS - {{ show.label }} - Season {{ season_id }}{% endblock %}
 
 {% block content %}
 <!-- info modal -->
@@ -16,7 +16,8 @@
 		<ol class="breadcrumb">
 			<li><a href="/">Home</a></li>
 			<li><a href="/tv-shows">TV Shows</a></li>
-			<li class="active">{{ show.label }}</li>
+			<li><a href="/tv-shows/{{ show_id}}">{{ show.label }}</a></li>
+			<li class="active">Season {{season_id}}</li>
 		</ol>
 		<div class="row">
 			<div class="col-md-4">
@@ -25,7 +26,13 @@
 						<h3 class="panel-title">{{ show.label }}</h3>
 					</div>
 					<div class="list-group">
-							<a href="/tv-shows/{{ show_id }}/SeasonID/Type" class="list-group-item">Viewtype Options</a>
+						{% for season in seasons %}
+							{% if season.season == season_id %}
+								<a href="/tv-shows/{{ show_id }}/{{ season.season }}" class="list-group-item active">{{ season.label }}</a>
+							{% else %}
+								<a href="/tv-shows/{{ show_id }}/{{ season.season }}" class="list-group-item">{{ season.label }}</a>
+							{% endif %}
+						{% endfor %}
 					</div>
 				</div>
 			</div>

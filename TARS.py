@@ -177,9 +177,14 @@ def tv_show_seasons_episodes(show_id,season_id):
         show = xbmc.VideoLibrary.GetTVShowDetails({"tvshowid":show_id})["result"]["tvshowdetails"]
     except:
         show = {}
+    try:
+        seasons = xbmc.VideoLibrary.GetSeasons({"tvshowid":show_id,"properties":["season"]})
+        seasons = seasons["result"]["seasons"]
+    except:
+        seasons = []
 
     try:
-        episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid":show_id,"season": season_id, "sort":{"order":"descending","method":"year"},"properties":["thumbnail","title","showtitle","season","episode","firstaired"]})
+        episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid":show_id,"season": season_id, "sort":{"order":"ascending","method":"episode"},"properties":["thumbnail","title","showtitle","season","episode","firstaired"]})
         episodes_result = episodes_list["result"]["episodes"]
         episodes  = [episodes_result[i:i+3] for i in range(0, len(episodes_result), 3)]
     except:
