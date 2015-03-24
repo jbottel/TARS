@@ -302,6 +302,11 @@ def seek_player(seek_value):
     print xbmc.Player.Seek({'playerid':1,'value':position})
     return ''
 
+@app.route('/set/volume/<int:volume_value>')
+def set_volume(volume_value):
+    print xbmc.Application.SetVolume({"volume":volume_value})
+    return ''
+
 def are_players_active():
     if xbmc.Player.GetActivePlayers()["result"]:
         return True
@@ -398,7 +403,9 @@ def info_episode(episode_id):
 
 @app.route('/get_properties')
 def get_properties():
-    properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime"]})
+    player_properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime"]})["result"]
+    app_properties = xbmc.Application.GetProperties({"properties":["volume","muted"]})["result"]
+    properties = dict(player_properties.items() + app_properties.items())
     return jsonify(properties)
 
 @app.route('/get_duration')

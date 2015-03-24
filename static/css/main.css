@@ -37,7 +37,23 @@ a { cursor: pointer; }
 }
 
 #progressbar {
-	width: 800px;;
+	width: 600px;
+}
+
+#volumebar {
+	width: 100px;
+}
+
+#volumebar .slider-selection {
+	background: #333;
+}
+
+#volumebar .slider-handle {
+	background: #555;
+}
+
+#volumebar .slider-track-right {
+	background: #666;
 }
 
 .episode-title {

@@ -27,6 +27,7 @@ $(document).ready(function() {
 			}
 	});
 	updateSlider();
+	var vBar = $("#volumebar").slider();
 
 	pBar.on("slideStart", function(slideEvt) {
 		sliderTimer.pause();
@@ -34,6 +35,15 @@ $(document).ready(function() {
 	pBar.on("slideStop", function(slideEvt) {
 		sliderTimer.play();
 		$.get('/seek/'+slideEvt.value);
+	});
+
+	vBar.on("slideStart", function(slideEvt) {
+		sliderTimer.pause();
+	});
+
+	vBar.on("slideStop", function(slideEvt) {
+		sliderTimer.play();
+		$.get('/set/volume/'+slideEvt.value);
 	});
 
 	var sliderTimer = $.timer(function() {
@@ -51,19 +61,21 @@ $(document).ready(function() {
 				return;
 			}
 
-			var setMax = ((data.result.totaltime.hours *3600) + (data.result.totaltime.minutes * 60) + data.result.totaltime.seconds) / 5;
+			vBar.slider('setValue',data.volume);
+
+			var setMax = ((data.totaltime.hours *3600) + (data.totaltime.minutes * 60) + data.totaltime.seconds) / 5;
 			console.log("setMax"+setMax);
 			pBar.slider('setAttribute','max',setMax);
-			var newVal = setMax * (data.result.percentage / 100);
+			var newVal = setMax * (data.percentage / 100);
 			pBar.slider('setValue',newVal);
-			if (data.result.totaltime.hours == 0) 
+			if (data.totaltime.hours == 0) 
 			{
-				var curTime = ""+pad(data.result.time.minutes)+":"+pad(data.result.time.seconds);
-				var fullTime  = ""+pad(data.result.totaltime.minutes)+":"+pad(data.result.totaltime.seconds);
+				var curTime = ""+pad(data.time.minutes)+":"+pad(data.time.seconds);
+				var fullTime  = ""+pad(data.totaltime.minutes)+":"+pad(data.totaltime.seconds);
 			}
 			else {
-				var curTime = ""+data.result.time.hours+":"+pad(data.result.time.minutes)+":"+pad(data.result.time.seconds);
-				var fullTime  = ""+data.result.totaltime.hours+":"+pad(data.result.totaltime.minutes)+":"+pad(data.result.totaltime.seconds);
+				var curTime = ""+data.time.hours+":"+pad(data.time.minutes)+":"+pad(data.time.seconds);
+				var fullTime  = ""+data.totaltime.hours+":"+pad(data.totaltime.minutes)+":"+pad(data.totaltime.seconds);
 			}
 			$("#secdisp").html(curTime+" / "+fullTime);
 		});

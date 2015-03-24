@@ -15,6 +15,7 @@
 			<link href="/static/css/main.css" rel="stylesheet" media="screen">
 			<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
 			<link href="/static/css/bootstrap-slider.css" rel="stylesheet" media="screen">
+			<link href="/static/css/font-awesome.min.css" rel="stylesheet" media="screen">
 					{%- endblock styles %}
 					{%- endblock head %}
 				</head>
@@ -58,12 +59,17 @@
 								<div class="container">
 									<div class="navbar-collapse collapse" id="footer-body">
 										<div class="nav navbar-nav navbar-left" style="line-height: 50px;">
-											<div style="vertical-align: middle; height:50px;">
+											<div style="float: left; vertical-align: middle; height:50px;">
+												<div style="vertical-align: middle; line-height: 20px;font-size: 90%; padding-right: 30px; padding-top:5px;">Title of the TV Show<br>Title of the Episode</div>
+											</div>
+											<div style="float: left; vertical-align: middle; height:50px;">
 												<span id="secdisp" >0:00 / 0:00</span>												<input id="progressbar" class="navbar-test" type="text" data-slider-min="0" data-slider-max="720" data-slider-id="progressbar">
+												<i class="fa fa-volume-up" style="margin-left: 20px; margin-right: 5px;"></i>
+												<input id="volumebar" class="navbar-test" type="text" data-slider-min="0" data-slider-max="100" data-slider-id="volumebar">
 											</div>
 										</div>
 										<ul class="nav navbar-nav navbar-right">
-											<li><a id="remote-button"><span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span>&nbsp; Remote</a></li>
+											<li><a id="remote-button"><span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span>&nbsp;</a></li>
 										</ul>
 									</div>
 									
