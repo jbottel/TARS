@@ -403,9 +403,12 @@ def info_episode(episode_id):
 
 @app.route('/get_properties')
 def get_properties():
-    player_properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime"]})["result"]
-    app_properties = xbmc.Application.GetProperties({"properties":["volume","muted"]})["result"]
-    properties = dict(player_properties.items() + app_properties.items())
+    try:
+        player_properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime"]})["result"]
+        app_properties = xbmc.Application.GetProperties({"properties":["volume","muted"]})["result"]
+        properties = dict(player_properties.items() + app_properties.items())
+    except:
+        properties = {"error":True}
     return jsonify(properties)
 
 @app.route('/get_duration')
