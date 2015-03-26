@@ -26,8 +26,8 @@ $(document).ready(function() {
 				else return hours + ":" + pad(minutes) + ":" + pad(secs);
 			}
 	});
-	updateSlider();
 	var vBar = $("#volumebar").slider();
+	updateSlider();
 
 	pBar.on("slideStart", function(slideEvt) {
 		sliderTimer.pause();
@@ -54,6 +54,9 @@ $(document).ready(function() {
 
 	function updateSlider() {
 		$.getJSON('/get_properties','',function(data) {
+			if (data.volume) {
+			vBar.slider('setValue',data.volume);
+			}
 			if (data.error) {
 				pBar.slider('setAttribute','max',100);
 				pBar.slider('setValue',0);
@@ -61,7 +64,6 @@ $(document).ready(function() {
 				return;
 			}
 
-			vBar.slider('setValue',data.volume);
 
 			var setMax = ((data.totaltime.hours *3600) + (data.totaltime.minutes * 60) + data.totaltime.seconds) / 5;
 			console.log("setMax"+setMax);
