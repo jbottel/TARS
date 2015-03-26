@@ -13,6 +13,21 @@ $(document).ready(function() {
 	$("#remote-button").click(function() {
 		$("#remoteDiv").toggle();
 	});
+	$("#play-pause-button").click(function() {
+		$.get("/remote/playpause");
+
+		if ($("#play-pause-button").hasClass("glyphicon-pause")) {
+			$("#play-pause-button").removeClass("glyphicon-pause");
+			$("#play-pause-button").addClass("glyphicon-play");
+		}
+		else {
+			$("#play-pause-button").removeClass("glyphicon-play");
+			$("#play-pause-button").addClass("glyphicon-pause");
+		}
+	});
+	$("#stop-button").click(function() {
+		$.get("/remote/stop");
+	});
 
 	var pBar = $("#progressbar").slider({
 			formatter: function(value) {
@@ -54,6 +69,14 @@ $(document).ready(function() {
 
 	function updateSlider() {
 		$.getJSON('/get_properties','',function(data) {
+			if (data.speed == 0) {
+			$("#play-pause-button").removeClass("glyphicon-pause");
+			$("#play-pause-button").addClass("glyphicon-play");
+			}
+			else {
+			$("#play-pause-button").removeClass("glyphicon-play");
+			$("#play-pause-button").addClass("glyphicon-pause");
+			}
 			if (data.volume) {
 			vBar.slider('setValue',data.volume);
 			}

@@ -404,7 +404,7 @@ def info_episode(episode_id):
 @app.route('/get_properties')
 def get_properties():
     try:
-        player_properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime"]})["result"]
+        player_properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime","speed"]})["result"]
         app_properties = xbmc.Application.GetProperties({"properties":["volume","muted"]})["result"]
         properties = dict(player_properties.items() + app_properties.items())
     except:

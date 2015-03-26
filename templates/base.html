@@ -62,9 +62,13 @@
 											<div style="float: left; vertical-align: middle; height:50px;">
 												<div style="vertical-align: middle; line-height: 20px;font-size: 90%; padding-right: 30px; padding-top:5px;">Title of the TV Show<br>Title of the Episode</div>
 											</div>
-											<div style="float: left; vertical-align: middle; height:50px;">
+											<div id="controls-container">
+												<a style="width: 20px;"><span id="stop-button" class="glyphicon glyphicon-stop" aria-hidden="true"></span></a>&nbsp;
+												<a style="width: 20px;"><span id="play-pause-button" class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
+											</div>
+											<div id="progress-container">
 												<span id="secdisp" >0:00 / 0:00</span>												<input id="progressbar" class="navbar-test" type="text" data-slider-min="0" data-slider-max="720" data-slider-id="progressbar">
-												<i class="fa fa-volume-up" style="margin-left: 20px; margin-right: 5px;"></i>
+												<i id="volume-icon" class="fa fa-volume-up volume-icon"></i>
 												<input id="volumebar" class="navbar-test" type="text" data-slider-min="0" data-slider-max="100" data-slider-id="volumebar">
 											</div>
 										</div>
