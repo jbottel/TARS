@@ -87,6 +87,8 @@ p.movie-cast {
 
 div.image-placeholder {
 	background-color: #272b30;
+	text-align: center;
+	margin: 0 auto;
 }
 
 div.image-placeholder img {

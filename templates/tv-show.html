@@ -44,7 +44,9 @@
 						{% for episode in row %}
 							<div class="col-md-4">
 						<div class="thumbnail">
-														<img class="media-object" width="220" src="{{ config.KODI_URI }}/image/{{ episode.thumbnail|urlencode }}" alt="Generic placeholder image">
+							<div class="holderjs image-placeholder" style="width:220px; height: 124px;" data-background-src="?holder.js/220x124/industrial/#272b30:#c8c8c8/text:{{episode.title}}">
+								<img class="media-object" width="220" height="124" src="{{ config.KODI_URI }}/image/{{ episode.thumbnail|urlencode }}" onerror='this.style.display="none"'>
+								</div>
 							<div class="caption">
 								<div class="text-center">
 																<h4 class="tv-info-epititle">{{ episode.title }} </h4>
