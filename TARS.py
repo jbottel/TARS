@@ -406,7 +406,8 @@ def get_properties():
     try:
         player_properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime","speed"]})["result"]
         app_properties = xbmc.Application.GetProperties({"properties":["volume","muted"]})["result"]
-        properties = dict(player_properties.items() + app_properties.items())
+        playing_properties = xbmc.Player.GetItem({"playerid":1,"properties":["title","season","episode","showtitle","thumbnail","streamdetails"]})["result"]
+        properties = dict(player_properties.items() + app_properties.items() + playing_properties.items())
     except:
         properties = {"error":True}
     return jsonify(properties)
