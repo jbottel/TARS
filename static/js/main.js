@@ -69,18 +69,7 @@ $(document).ready(function() {
 
 	function updateSlider() {
 		$.getJSON('/get_properties','',function(data) {
-			if (data.item.type == "episode") {
-				var tvShowTitle = data.item.showtitle;
-				var displayTVShowTitle = tvShowTitle;
-				if (tvShowTitle.length > 22) displayTVShowTitle = tvShowTitle.substring(0,22) + "...";
-				var showTitleHTML = "<span title='" + tvShowTitle + "'>" + displayTVShowTitle + "</span>";
-				$("#tv-show-title").html(showTitleHTML);
-				var episodeTitle = "S" + data.item.season + "E" + data.item.episode + " - " + data.item.title;
-				var displayTitle = episodeTitle;
-				if (episodeTitle.length > 21) displayTitle = episodeTitle.substring(0,21) + "...";
-				var titleHTML = "<span title='" + episodeTitle + "'>" + displayTitle + "</span>";
-				$("#episode-title").html(titleHTML);
-			}
+			
 			if (data.speed == 0) {
 			$("#play-pause-button").removeClass("glyphicon-pause");
 			$("#play-pause-button").addClass("glyphicon-play");
@@ -96,7 +85,25 @@ $(document).ready(function() {
 				pBar.slider('setAttribute','max',100);
 				pBar.slider('setValue',0);
 				$("#secdisp").html("0:00 / 0:00");
+				$("#tv-show-title").html("<span style='padding-right: 11em;'></span>");
+				$("#episode-title").html("&nbsp;");
 				return;
+			}
+			if (data.item.type == "episode") {
+				var tvShowTitle = data.item.showtitle;
+				var displayTVShowTitle = tvShowTitle;
+				if (tvShowTitle.length > 18) displayTVShowTitle = tvShowTitle.substring(0,18) + "...";
+				var showTitleHTML = "<span title='" + tvShowTitle + "'>" + displayTVShowTitle + "</span>";
+				$("#tv-show-title").html(showTitleHTML);
+				var episodeTitle = "S" + data.item.season + "E" + data.item.episode + " - " + data.item.title;
+				var displayTitle = episodeTitle;
+				if (episodeTitle.length > 18) displayTitle = episodeTitle.substring(0,18) + "...";
+				var titleHTML = "<span title='" + episodeTitle + "'>" + displayTitle + "</span>";
+				$("#episode-title").html(titleHTML);
+			}
+			else {
+				$("#tv-show-title").html("");
+				$("#episode-title").html("");
 			}
 
 
