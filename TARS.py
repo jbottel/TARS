@@ -417,6 +417,11 @@ def get_duration():
     properties = xbmc.Player.GetProperties({"playerid":1,"properties":["totaltime"]})
     return jsonify(properties)
 
+def get_all_movie_titles():
+    movies = xbmc.VideoLibrary.GetMovies(
+            {"properties":["originaltitle"],"sort":{"order":"ascending","method":"title"}})["result"]["movies"]
+    return movies
+
 
 if __name__ == '__main__':
     xbmc = XBMC(app.config["KODI_URI"]+"/jsonrpc")
