@@ -422,6 +422,10 @@ def get_all_movie_titles():
             {"properties":["originaltitle"],"sort":{"order":"ascending","method":"title"}})["result"]["movies"]
     return movies
 
+def get_all_tv_show_titles():
+    tv_shows = xbmc.VideoLibrary.GetTVShows({"properties":["title"]})["result"]
+    return tv_shows
+
 
 if __name__ == '__main__':
     xbmc = XBMC(app.config["KODI_URI"]+"/jsonrpc")
