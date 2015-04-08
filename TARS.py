@@ -423,9 +423,34 @@ def get_all_movie_titles():
     return movies
 
 def get_all_tv_show_titles():
-    tv_shows = xbmc.VideoLibrary.GetTVShows({"properties":["title"]})["result"]
+    tv_shows = xbmc.VideoLibrary.GetTVShows({"properties":["title"]})["result"]["tvshows"]
     return tv_shows
 
+
+@app.route('/debug/search_movies/<search_term>')
+def debug_search_movies(search_term):
+    return jsonify({'movies':search_movies(search_term)})
+
+@app.route('/debug/search_tv/<search_term>')
+def debug_search_tv(search_term):
+    return jsonify({'tv_shows':search_tv_shows(search_term)})
+
+
+def search_movies(search_term):
+    movies = get_all_movie_titles()
+    matching_movies = []
+    for movie in movies:
+        if search_term in movie["originaltitle"]:
+            matching_movies.append(movie)
+    return matching_movies
+
+def search_tv_shows(search_term):
+    tv_shows = get_all_tv_show_titles()
+    matching_tv_shows = []
+    for show in tv_shows:
+        if search_term in show["title"]:
+            matching_tv_shows.append(show)
+    return matching_tv_shows
 
 if __name__ == '__main__':
     xbmc = XBMC(app.config["KODI_URI"]+"/jsonrpc")
