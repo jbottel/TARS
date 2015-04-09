@@ -1,4 +1,5 @@
 $(document).ready(function() {	
+	$('.form-control').focus();
 	$('.infoMovie').on('click', function(e) {
 		var src = "/info/movie/" + $(this).attr('data-movie-id');
 		$("#infoModal iframe").attr({'src':src});
