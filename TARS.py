@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import jsonify
+from flask import request
 from xbmcjson import XBMC, PLAYER_VIDEO
 app = Flask(__name__)
 app.config.from_object('settings')
@@ -435,7 +436,6 @@ def debug_search_movies(search_term):
 def debug_search_tv(search_term):
     return jsonify({'tv_shows':search_tv_shows(search_term)})
 
-
 def search_movies(search_term):
     movies = get_all_movie_titles()
     matching_movies = []
@@ -451,6 +451,20 @@ def search_tv_shows(search_term):
         if search_term in show["title"]:
             matching_tv_shows.append(show)
     return matching_tv_shows
+
+@app.route('/search')
+def search_results():
+    search_term = request.args.get('query')
+    movie_ids = search_movies(search_term)
+    tv_show_ids = search_movies(search_term)
+    movies = []
+    tv_shows = []
+    for movie in movie_ids:
+        movie_details = xbmc.VideoLibrary.GetMovieDetails({"movieid":movie["movieid"],"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"]})["result"]["moviedetails"]
+        print movie_details
+        movies.append(movie_details)
+
+    return render_template('search-results.html',**locals())
 
 if __name__ == '__main__':
     xbmc = XBMC(app.config["KODI_URI"]+"/jsonrpc")
