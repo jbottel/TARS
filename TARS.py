@@ -424,7 +424,7 @@ def get_all_movie_titles():
     return movies
 
 def get_all_tv_show_titles():
-    tv_shows = xbmc.VideoLibrary.GetTVShows({"properties":["title"]})["result"]["tvshows"]
+    tv_shows = xbmc.VideoLibrary.GetTVShows({"properties":["title"],"sort":{"order":"ascending","method":"title"}})["result"]["tvshows"]
     return tv_shows
 
 
@@ -456,14 +456,16 @@ def search_tv_shows(search_term):
 def search_results():
     search_term = request.args.get('query')
     movie_ids = search_movies(search_term)
-    tv_show_ids = search_movies(search_term)
+    tv_show_ids = search_tv_shows(search_term)
     movies = []
     tv_shows = []
     for movie in movie_ids:
         movie_details = xbmc.VideoLibrary.GetMovieDetails({"movieid":movie["movieid"],"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"]})["result"]["moviedetails"]
-        print movie_details
         movies.append(movie_details)
 
+    for tv_show in tv_show_ids:
+        seasons = xbmc.VideoLibrary.GetSeasons({"tvshowid":tv_show["tvshowid"],"properties":["season"]})["result"]
+        tv_shows.append({"show":tv_show,"seasons":seasons})
     return render_template('search-results.html',**locals())
 
 if __name__ == '__main__':

@@ -55,11 +55,47 @@
 										</div>
 </td>
 									</tr>
+								{% else %}
+								<tr>
+									<td colspan="2"><p>No Results Found.</p></td>
+								</tr>
 								{% endfor %}
 						</table>
 
 
 				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">TV Show Results</h3>
+					</div>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for tv_show in tv_shows %}
+									<tr>
+										<td><a href="/tv-shows/{{tv_show.show.tvshowid}}">{{tv_show.show.title}}</a></td>
+										<td style="text-align: right;">
+											Seasons:
+											{% for season in tv_show.seasons.seasons %}
+												<a href="/tv-shows/{{tv_show.show.tvshowid}}/{{season.season}}">{{ season.season }}</a>&nbsp;&nbsp;
+											{% endfor %}
+</td>
+									</tr>
+								{%else %}
+								<tr>
+									<td colspan="2"><p>No Results Found.</p></td>
+								</tr>
+								{% endfor %}
+						</table>
+
+
+				</div>
+
 
 
 							</div>
