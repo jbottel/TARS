@@ -440,7 +440,7 @@ def search_movies(search_term):
     movies = get_all_movie_titles()
     matching_movies = []
     for movie in movies:
-        if search_term in movie["originaltitle"]:
+        if search_term.lower() in movie["originaltitle"].lower():
             matching_movies.append(movie)
     return matching_movies
 
@@ -448,7 +448,7 @@ def search_tv_shows(search_term):
     tv_shows = get_all_tv_show_titles()
     matching_tv_shows = []
     for show in tv_shows:
-        if search_term in show["title"]:
+        if search_term.lower() in show["title"].lower():
             matching_tv_shows.append(show)
     return matching_tv_shows
 
