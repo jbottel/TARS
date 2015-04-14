@@ -57,7 +57,12 @@
 									</tr>
 								{% else %}
 								<tr>
+								{% if size_error %}
+									<td colspan="2"><p>Please use a search term longer than two characters.</p></td>
+								{% else %}
 									<td colspan="2"><p>No Results Found.</p></td>
+
+								{% endif %}
 								</tr>
 								{% endfor %}
 						</table>

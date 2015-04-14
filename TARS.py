@@ -455,6 +455,11 @@ def search_tv_shows(search_term):
 @app.route('/search')
 def search_results():
     search_term = request.args.get('query')
+    if search_term == '' or len(search_term) < 2:
+        movies = []
+        tv_shows = []
+        size_error = True
+        return render_template('search-results.html',**locals())
     movie_ids = search_movies(search_term)
     tv_show_ids = search_tv_shows(search_term)
     movies = []
