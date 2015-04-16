@@ -102,6 +102,14 @@ $(document).ready(function() {
 				var titleHTML = "<span title='" + episodeTitle + "'>" + displayTitle + "</span>";
 				$("#episode-title").html(titleHTML);
 			}
+			else if (data.item.type == "movie") {
+				var movieTitle = data.item.title;
+				var displayMovieTitle = movieTitle;
+				if (movieTitle.length > 18) displayMovieTitle = movieTitle.substring(0,18) + "...";
+				var movieTitleHTML = "<span title='" + movieTitle + "'>" + displayMovieTitle + "</span>";
+				$("#tv-show-title").html(movieTitleHTML);
+				$("#episode-title").html("");
+			}
 			else {
 				$("#tv-show-title").html("");
 				$("#episode-title").html("");
