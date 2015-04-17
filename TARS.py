@@ -6,6 +6,7 @@ from xbmcjson import XBMC, PLAYER_VIDEO
 app = Flask(__name__)
 app.config.from_object('settings')
 
+
 @app.route('/')
 def index():
     """Compile all of the items necessary on the front page, including:
@@ -18,42 +19,44 @@ def index():
 
     try:
         recently_added_episodes = xbmc.VideoLibrary.GetRecentlyAddedEpisodes(
-                {"properties":["showtitle","title","episode","season","firstaired","plot","thumbnail"],"limits":{"end":5}})["result"]["episodes"]
+            {"properties": ["showtitle", "title", "episode", "season", "firstaired", "plot", "thumbnail"], "limits": {"end": 5}})["result"]["episodes"]
     except:
         recently_added_episodes = []
 
     try:
         recently_added_movies = xbmc.VideoLibrary.GetRecentlyAddedMovies(
-                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber"],"limits":{"end":5}})["result"]["movies"]
+            {"properties": ["originaltitle", "year", "plot", "thumbnail", "cast", "imdbnumber"], "limits": {"end": 5}})["result"]["movies"]
     except:
         recently_added_movies = []
 
     try:
-        video_playlist_result = xbmc.Playlist.GetItems({"properties":["runtime","showtitle","title"], "playlistid":1})
+        video_playlist_result = xbmc.Playlist.GetItems(
+            {"properties": ["runtime", "showtitle", "title"], "playlistid": 1})
         video_playlist = video_playlist_result["result"]["items"]
     except:
         video_playlist = []
 
     try:
-        audio_playlist_result = xbmc.Playlist.GetItems({"properties":["duration","artist","title"], "playlistid":0})
+        audio_playlist_result = xbmc.Playlist.GetItems(
+            {"properties": ["duration", "artist", "title"], "playlistid": 0})
         audio_playlist = audio_playlist_result["result"]["items"]
     except:
         audio_playlist = []
 
     for item in video_playlist:
         try:
-            item["runtime"] = format_runtime(item["runtime"],"colon")
+            item["runtime"] = format_runtime(item["runtime"], "colon")
         except:
             item["runtime"] = "Unknown"
-        
 
     for item in audio_playlist:
         try:
-            item["duration"] = format_runtime(item["duration"],"colon")
+            item["duration"] = format_runtime(item["duration"], "colon")
         except:
             item["duration"] = "Unknown"
 
-    return render_template('index.html',**locals())
+    return render_template('index.html', **locals())
+
 
 @app.route("/movies")
 def movies():
@@ -64,12 +67,12 @@ def movies():
     """
     try:
         recently_added_movies_list = xbmc.VideoLibrary.GetRecentlyAddedMovies(
-                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"],"limits":{"end":15}})["result"]["movies"]
-        recently_added_movies  = [recently_added_movies_list[i:i+3] for i in range(0, len(recently_added_movies_list), 3)]
+            {"properties": ["originaltitle", "year", "plot", "thumbnail", "cast", "imdbnumber", "trailer"], "limits": {"end": 15}})["result"]["movies"]
+        recently_added_movies = [recently_added_movies_list[i:i + 3] for i in range(0, len(recently_added_movies_list), 3)]
     except:
         recently_added_movies = []
 
-    return render_template('movies.html',**locals())
+    return render_template('movies.html', **locals())
 
 
 @app.route("/movies/title")
@@ -80,11 +83,12 @@ def movies_by_title():
     """
     try:
         movies = xbmc.VideoLibrary.GetMovies(
-                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"],"sort":{"order":"ascending","method":"title"}})["result"]["movies"]
+            {"properties": ["originaltitle", "year", "plot", "thumbnail", "cast", "imdbnumber", "trailer"], "sort": {"order": "ascending", "method": "title"}})["result"]["movies"]
     except:
         movies = []
 
-    return render_template('movies-by-title.html',**locals())
+    return render_template('movies-by-title.html', **locals())
+
 
 @app.route("/movies/title/info")
 def movies_by_title_info():
@@ -94,12 +98,13 @@ def movies_by_title_info():
     """
     try:
         movies_list = xbmc.VideoLibrary.GetMovies(
-                {"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"],"sort":{"order":"ascending","method":"title"}})["result"]["movies"]
-        movies  = [movies_list[i:i+3] for i in range(0, len(movies_list), 3)]
+            {"properties": ["originaltitle", "year", "plot", "thumbnail", "cast", "imdbnumber", "trailer"], "sort": {"order": "ascending", "method": "title"}})["result"]["movies"]
+        movies = [movies_list[i:i + 3] for i in range(0, len(movies_list), 3)]
     except:
         movies = []
 
-    return render_template('movies-by-title-info.html',**locals())
+    return render_template('movies-by-title-info.html', **locals())
+
 
 @app.route("/movies/genre")
 def movies_by_genre():
@@ -108,11 +113,13 @@ def movies_by_genre():
     Return a rendered template.
     """
     try:
-        genres = xbmc.VideoLibrary.GetGenres({"type":"movie","sort":{"order":"ascending","method":"label"}})
+        genres = xbmc.VideoLibrary.GetGenres(
+            {"type": "movie", "sort": {"order": "ascending", "method": "label"}})
         genres = genres["result"]["genres"]
     except:
         genres = []
-    return render_template('movies-by-genre.html',**locals())
+    return render_template('movies-by-genre.html', **locals())
+
 
 @app.route("/movies/genre/<int:genre_id>")
 def get_movies_by_genre(genre_id):
@@ -123,20 +130,24 @@ def get_movies_by_genre(genre_id):
     Return a rendered template.
     """
     try:
-        genres = xbmc.VideoLibrary.GetGenres({"type":"movie","sort":{"order":"ascending","method":"label"}})
+        genres = xbmc.VideoLibrary.GetGenres(
+            {"type": "movie", "sort": {"order": "ascending", "method": "label"}})
         genres = genres["result"]["genres"]
 
         # Get label for current genre
         for genre in genres:
-            if genre["genreid"] == genre_id: 
-                this_genre=genre["label"]
+            if genre["genreid"] == genre_id:
+                this_genre = genre["label"]
 
-        props = ["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer","genre"]
-        movies = xbmc.VideoLibrary.GetMovies({"properties":props,"filter":{"genreid":genre_id}})
+        props = ["originaltitle", "year", "plot", "thumbnail",
+                 "cast", "imdbnumber", "trailer", "genre"]
+        movies = xbmc.VideoLibrary.GetMovies(
+            {"properties": props, "filter": {"genreid": genre_id}})
         movies = movies["result"]["movies"]
     except:
         genres = []
-    return render_template('movies-by-genre.html',**locals())
+    return render_template('movies-by-genre.html', **locals())
+
 
 @app.route("/movies/set")
 def movies_by_set():
@@ -146,12 +157,14 @@ def movies_by_set():
     Return a rendered template.
     """
     try:
-        sets_list = xbmc.VideoLibrary.GetMovieSets({"sort":{"order":"ascending","method":"label"}})
+        sets_list = xbmc.VideoLibrary.GetMovieSets(
+            {"sort": {"order": "ascending", "method": "label"}})
         sets = sets_list["result"]["sets"]
     except:
         sets = []
-    details = {"result":{"setdetails":{"movies":[]}}}
-    return render_template('movies-by-collection.html',**locals())
+    details = {"result": {"setdetails": {"movies": []}}}
+    return render_template('movies-by-collection.html', **locals())
+
 
 @app.route("/movies/set/<int:set_id>")
 def get_movies_by_set(set_id):
@@ -162,17 +175,18 @@ def get_movies_by_set(set_id):
     Return a rendered template.
     """
     try:
-        sets_list = xbmc.VideoLibrary.GetMovieSets({"sort":{"order":"ascending","method":"label"}})
+        sets_list = xbmc.VideoLibrary.GetMovieSets(
+            {"sort": {"order": "ascending", "method": "label"}})
         sets = sets_list["result"]["sets"]
     except:
         sets = []
     try:
-        details = xbmc.VideoLibrary.GetMovieSetDetails({"setid":set_id,"properties":["title","thumbnail"]})
+        details = xbmc.VideoLibrary.GetMovieSetDetails(
+            {"setid": set_id, "properties": ["title", "thumbnail"]})
     except:
         details = []
 
-    return render_template('movies-by-collection.html',**locals())
-
+    return render_template('movies-by-collection.html', **locals())
 
 
 @app.route("/tv-shows")
@@ -185,18 +199,21 @@ def tv_shows():
     """
     try:
         recently_added_episodes_list = xbmc.VideoLibrary.GetRecentlyAddedEpisodes(
-                {"properties":["showtitle","title","episode","season","firstaired","plot","thumbnail"],"limits":{"end":15}})["result"]["episodes"]
-        recently_added_episodes  = [recently_added_episodes_list[i:i+3] for i in range(0, len(recently_added_episodes_list), 3)]
+            {"properties": ["showtitle", "title", "episode", "season", "firstaired", "plot", "thumbnail"], "limits": {"end": 15}})["result"]["episodes"]
+        recently_added_episodes = [recently_added_episodes_list[
+            i:i + 3] for i in range(0, len(recently_added_episodes_list), 3)]
     except:
         recently_added_episodes = []
 
     try:
-        tv_shows_list = xbmc.VideoLibrary.GetTVShows({"sort":{"order":"ascending","method":"title"},"properties":["title","year"]})
+        tv_shows_list = xbmc.VideoLibrary.GetTVShows(
+            {"sort": {"order": "ascending", "method": "title"}, "properties": ["title", "year"]})
         tv_shows = tv_shows_list["result"]["tvshows"]
     except:
         tv_shows = []
 
-    return render_template('tv-shows.html',**locals())
+    return render_template('tv-shows.html', **locals())
+
 
 @app.route("/tv-shows/<int:show_id>")
 def tv_show_seasons(show_id):
@@ -208,27 +225,32 @@ def tv_show_seasons(show_id):
     Return a rendered template.
     """
     try:
-        show = xbmc.VideoLibrary.GetTVShowDetails({"tvshowid":show_id})["result"]["tvshowdetails"]
+        show = xbmc.VideoLibrary.GetTVShowDetails(
+            {"tvshowid": show_id})["result"]["tvshowdetails"]
     except:
         show = {}
 
     try:
-        episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid":show_id,"sort":{"order":"descending","method":"year"},"limits":{"end":15},"properties":["thumbnail","title","showtitle","season","episode","firstaired"]})
+        episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid": show_id, "sort": {"order": "descending", "method": "year"}, "limits": {
+                                                      "end": 15}, "properties": ["thumbnail", "title", "showtitle", "season", "episode", "firstaired"]})
         episodes_result = episodes_list["result"]["episodes"]
-        episodes  = [episodes_result[i:i+3] for i in range(0, len(episodes_result), 3)]
+        episodes = [episodes_result[i:i + 3]
+                    for i in range(0, len(episodes_result), 3)]
     except:
         episodes = []
 
     try:
-        seasons = xbmc.VideoLibrary.GetSeasons({"tvshowid":show_id,"properties":["season"]})
+        seasons = xbmc.VideoLibrary.GetSeasons(
+            {"tvshowid": show_id, "properties": ["season"]})
         seasons = seasons["result"]["seasons"]
     except:
         seasons = []
 
-    return render_template('tv-show.html',**locals())
+    return render_template('tv-show.html', **locals())
+
 
 @app.route("/tv-shows/<int:show_id>/<int:season_id>")
-def tv_show_seasons_episodes(show_id,season_id):
+def tv_show_seasons_episodes(show_id, season_id):
     """Compile all of the items necessary to show episodes for a selected TV show season, including:
     - List of episodes matching the season
     - Dictionary of TV show details
@@ -236,23 +258,27 @@ def tv_show_seasons_episodes(show_id,season_id):
     Return a rendered template.
     """
     try:
-        show = xbmc.VideoLibrary.GetTVShowDetails({"tvshowid":show_id})["result"]["tvshowdetails"]
+        show = xbmc.VideoLibrary.GetTVShowDetails(
+            {"tvshowid": show_id})["result"]["tvshowdetails"]
     except:
         show = {}
     try:
-        seasons = xbmc.VideoLibrary.GetSeasons({"tvshowid":show_id,"properties":["season"]})
+        seasons = xbmc.VideoLibrary.GetSeasons(
+            {"tvshowid": show_id, "properties": ["season"]})
         seasons = seasons["result"]["seasons"]
     except:
         seasons = []
 
     try:
-        episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid":show_id,"season": season_id, "sort":{"order":"ascending","method":"episode"},"properties":["thumbnail","title","showtitle","season","episode","firstaired"]})
+        episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid": show_id, "season": season_id, "sort": {
+                                                      "order": "ascending", "method": "episode"}, "properties": ["thumbnail", "title", "showtitle", "season", "episode", "firstaired"]})
         episodes_result = episodes_list["result"]["episodes"]
-        episodes  = [episodes_result[i:i+3] for i in range(0, len(episodes_result), 3)]
+        episodes = [episodes_result[i:i + 3]
+                    for i in range(0, len(episodes_result), 3)]
     except:
         episodes = []
 
-    return render_template('tv-show-episodes.html',**locals())
+    return render_template('tv-show-episodes.html', **locals())
 
 
 @app.route('/remote')
@@ -260,12 +286,14 @@ def remote():
     """Return the remote template"""
     return render_template('remote.html')
 
+
 @app.route('/remote/playpause')
 def remote_playpause():
     """Press the play/pause button"""
-    xbmc.Player.PlayPause({"playerid":0})
-    xbmc.Player.PlayPause({"playerid":1})
+    xbmc.Player.PlayPause({"playerid": 0})
+    xbmc.Player.PlayPause({"playerid": 1})
     return ''
+
 
 @app.route('/remote/left')
 def remote_left():
@@ -273,11 +301,13 @@ def remote_left():
     xbmc.Input.Left()
     return ''
 
+
 @app.route('/remote/right')
 def remote_right():
     """Press the right button."""
     xbmc.Input.Right()
     return ''
+
 
 @app.route('/remote/up')
 def remote_up():
@@ -285,48 +315,55 @@ def remote_up():
     xbmc.Input.Up()
     return ''
 
+
 @app.route('/remote/down')
 def remote_down():
     """Press the down button."""
     xbmc.Input.Down()
     return ''
 
+
 @app.route('/remote/select')
 def remote_select():
     """Press the select button."""
     xbmc.Input.Select()
-    return 
+    return
+
 
 @app.route('/remote/rewind')
 def remote_rewind():
     """Press the rewind button."""
-    xbmc.Input.ExecuteAction({"action":"analogrewind"})
+    xbmc.Input.ExecuteAction({"action": "analogrewind"})
     return ''
+
 
 @app.route('/remote/fastforward')
 def remote_fastforward():
     """Press the fast forward button."""
-    xbmc.Input.ExecuteAction({"action":"analogfastforward"})
+    xbmc.Input.ExecuteAction({"action": "analogfastforward"})
     return ''
+
 
 @app.route('/remote/previous')
 def remote_previous():
     """Press the previous button."""
-    xbmc.Player.GoTo({"to":"previous", "playerid":1})
+    xbmc.Player.GoTo({"to": "previous", "playerid": 1})
     return ''
+
 
 @app.route('/remote/next')
 def remote_next():
     """Press the next button."""
-    xbmc.Player.GoTo({"to":"next", "playerid":1})
+    xbmc.Player.GoTo({"to": "next", "playerid": 1})
     return ''
 
 
 @app.route('/remote/stop')
 def remote_stop():
     """Press the stop button."""
-    xbmc.Player.Stop({"playerid":1})
+    xbmc.Player.Stop({"playerid": 1})
     return ''
+
 
 @app.route('/remote/title')
 def remote_title():
@@ -334,17 +371,20 @@ def remote_title():
     xbmc.Input.ContextMenu()
     return ''
 
+
 @app.route('/remote/info')
 def remote_info():
     """Press the info button."""
     xbmc.Input.Info()
     return ''
 
+
 @app.route('/remote/menu')
 def remote_menu():
     """Press the menu button."""
     xbmc.Input.ShowOSD()
     return ''
+
 
 @app.route('/remote/back')
 def remote_back():
@@ -360,67 +400,76 @@ def seek_player(seek_value):
     # Multiply by the reducing factor of 5 to deal with actual seconds.
     seek_value = seek_value * 5
 
-    # Turn seconds value into a value represented in hours, minutes, and seconds.
+    # Turn seconds value into a value represented in hours, minutes, and
+    # seconds.
     hours = seek_value / 3600
-    minutes = (seek_value - (hours*3600))/60
-    seconds = seek_value - hours*3600 - minutes*60
-    position = { 'hours': hours, 'minutes': minutes, 'seconds': seconds }
+    minutes = (seek_value - (hours * 3600)) / 60
+    seconds = seek_value - hours * 3600 - minutes * 60
+    position = {'hours': hours, 'minutes': minutes, 'seconds': seconds}
 
     # Send a seek request to the player.
-    xbmc.Player.Seek({'playerid':1,'value':position})
+    xbmc.Player.Seek({'playerid': 1, 'value': position})
     return ''
+
 
 @app.route('/set/volume/<int:volume_value>')
 def set_volume(volume_value):
     """Set the player volume to volume_value."""
-    xbmc.Application.SetVolume({"volume":volume_value})
+    xbmc.Application.SetVolume({"volume": volume_value})
     return ''
+
 
 def are_players_active():
     """Return true if players are active."""
     if xbmc.Player.GetActivePlayers()["result"]:
         return True
 
+
 @app.route('/play/movie/<int:movie_id>')
 def play_movie(movie_id):
     """Play a movie corresponding to movie_id."""
-    xbmc.Playlist.Add({'item':{'movieid': movie_id},'playlistid':1})
-    xbmc.Player.Open({'item':{'movieid': movie_id}})
+    xbmc.Playlist.Add({'item': {'movieid': movie_id}, 'playlistid': 1})
+    xbmc.Player.Open({'item': {'movieid': movie_id}})
     return ''
+
 
 @app.route('/enqueue/movie/<int:movie_id>')
 def enqueue_movie(episode_id):
     """Add a movie to the playlist corresponding to movie_id."""
-    xbmc.Playlist.Add({'item':{'movieid': movie_id},'playlistid':1})
+    xbmc.Playlist.Add({'item': {'movieid': movie_id}, 'playlistid': 1})
     return ''
+
 
 @app.route('/play/episode/<int:episode_id>')
 def play_episode(episode_id):
     """Play a TV show episode corresponding to episode_id."""
-    xbmc.Playlist.Add({'item':{'episodeid': episode_id},'playlistid':1})
-    xbmc.Player.Open({'item':{'episodeid': episode_id}})
+    xbmc.Playlist.Add({'item': {'episodeid': episode_id}, 'playlistid': 1})
+    xbmc.Player.Open({'item': {'episodeid': episode_id}})
     return ''
+
 
 @app.route('/enqueue/episode/<int:episode_id>')
 def enqueue_episode(episode_id):
     """Add a TV show episode to the playlist corresponding to episode_id."""
-    xbmc.Playlist.Add({'item':{'episodeid': episode_id},'playlistid':1})
+    xbmc.Playlist.Add({'item': {'episodeid': episode_id}, 'playlistid': 1})
     return ''
+
 
 @app.route('/play/trailer/<int:movie_id>')
 def play_trailer(movie_id):
     """Retrieve the trailer URL for the movie from the database and open it in the player."""
-    details = xbmc.VideoLibrary.GetMovieDetails({"movieid": movie_id,"properties":["trailer"]})
+    details = xbmc.VideoLibrary.GetMovieDetails(
+        {"movieid": movie_id, "properties": ["trailer"]})
     trailer = details["result"]["moviedetails"]["trailer"]
 
     # Send opening request for trailer
-    xbmc.Player.Open({'item':{'file': trailer}})
+    xbmc.Player.Open({'item': {'file': trailer}})
     return ''
 
 
 def format_runtime(item_runtime, format="text"):
     """Format a runtime in seconds to a human readable format in hours and minutes.
-    
+
     Takes a "format" argument that specifies whether the function should return:
     "text" -- "2 hr 7 min"
     "colon" -- "2:07:00"
@@ -428,28 +477,30 @@ def format_runtime(item_runtime, format="text"):
     """
     if format == "text":
         if item_runtime > 3600:
-            hours = item_runtime/3600
-            minutes = item_runtime/60 - (hours*60)
+            hours = item_runtime / 3600
+            minutes = item_runtime / 60 - (hours * 60)
             if minutes == 0:
                 newruntime = str(hours) + " hr "
             else:
-                newruntime = str(hours) + " hr " + str(minutes) + " min" 
-        else: 
-            minutes = item_runtime/60
-            seconds = item_runtime - minutes*60
-            newruntime = str(minutes) + " min "+ str(seconds) + " sec"
+                newruntime = str(hours) + " hr " + str(minutes) + " min"
+        else:
+            minutes = item_runtime / 60
+            seconds = item_runtime - minutes * 60
+            newruntime = str(minutes) + " min " + str(seconds) + " sec"
     if format == "colon":
         if item_runtime > 3600:
-            hours = item_runtime/3600
-            minutes = item_runtime/60 - (hours*60)
+            hours = item_runtime / 3600
+            minutes = item_runtime / 60 - (hours * 60)
             seconds = item_runtime - minutes * 60 - hours * 3600
-            newruntime = str(hours) + ":" + str(minutes).zfill(2) + ":" + str(seconds).zfill(2)
-        else: 
-            minutes = item_runtime/60
-            seconds = item_runtime - minutes*60
+            newruntime = str(
+                hours) + ":" + str(minutes).zfill(2) + ":" + str(seconds).zfill(2)
+        else:
+            minutes = item_runtime / 60
+            seconds = item_runtime - minutes * 60
             newruntime = str(minutes) + ":" + str(seconds).zfill(2)
 
     return newruntime
+
 
 @app.route('/info/movie/<int:movie_id>')
 def info_movie(movie_id):
@@ -458,18 +509,20 @@ def info_movie(movie_id):
 
     Return a rendered template.
     """
-    props = ["thumbnail","originaltitle","year","runtime","genre",
-            "director","cast", "plot","trailer","imdbnumber", "mpaa"]
-    details = xbmc.VideoLibrary.GetMovieDetails({"movieid": movie_id,"properties":props})
+    props = ["thumbnail", "originaltitle", "year", "runtime", "genre",
+             "director", "cast", "plot", "trailer", "imdbnumber", "mpaa"]
+    details = xbmc.VideoLibrary.GetMovieDetails(
+        {"movieid": movie_id, "properties": props})
     movie = details["result"]["moviedetails"]
 
     # Format MPAA Rating to remove "Rating"
-    movie["mpaa"] = movie["mpaa"].replace("Rated","",1)
+    movie["mpaa"] = movie["mpaa"].replace("Rated", "", 1)
 
     # Format the movie runtime into a human readable format
     movie["runtime"] = format_runtime(movie["runtime"])
 
-    return render_template('info-movie.html',**locals())
+    return render_template('info-movie.html', **locals())
+
 
 @app.route('/info/episode/<int:episode_id>')
 def info_episode(episode_id):
@@ -478,20 +531,22 @@ def info_episode(episode_id):
 
     Return a rendered template.
     """
-    props = ["thumbnail","showtitle","title","plot","cast","runtime","season","episode","firstaired"]
-    details = xbmc.VideoLibrary.GetEpisodeDetails({"episodeid": episode_id,"properties":props})
+    props = ["thumbnail", "showtitle", "title", "plot",
+             "cast", "runtime", "season", "episode", "firstaired"]
+    details = xbmc.VideoLibrary.GetEpisodeDetails(
+        {"episodeid": episode_id, "properties": props})
     episode = details["result"]["episodedetails"]
 
     # Format the movie runtime into a human readable format
     episode["runtime"] = format_runtime(episode["runtime"])
 
-    return render_template('info-episode.html',**locals())
+    return render_template('info-episode.html', **locals())
 
 
 @app.route('/get_properties')
 def get_properties():
     """Return a set of properties to the client to convey current status of the player.
-    
+
     This includes three different types of properties:
     - Player properties indicating percentage complete, time elapsed, speed
     - App properties incidicating current volume and mute status
@@ -500,45 +555,56 @@ def get_properties():
     The properties are compiled into a single dictionary and returned in JSON format.
     """
     try:
-        player_properties = xbmc.Player.GetProperties({"playerid":1,"properties":["time","percentage","totaltime","speed"]})["result"]
-        app_properties = xbmc.Application.GetProperties({"properties":["volume","muted"]})["result"]
-        playing_properties = xbmc.Player.GetItem({"playerid":1,"properties":["title","season","episode","showtitle","thumbnail"]})["result"]
-        
+        player_properties = xbmc.Player.GetProperties(
+            {"playerid": 1, "properties": ["time", "percentage", "totaltime", "speed"]})["result"]
+        app_properties = xbmc.Application.GetProperties(
+            {"properties": ["volume", "muted"]})["result"]
+        playing_properties = xbmc.Player.GetItem({"playerid": 1, "properties": [
+                                                 "title", "season", "episode", "showtitle", "thumbnail"]})["result"]
+
         # Compile all of the properties into a single dictionary.
-        properties = dict(player_properties.items() + app_properties.items() + playing_properties.items())
+        properties = dict(
+            player_properties.items() + app_properties.items() + playing_properties.items())
 
     except:
-        properties = {"error":True}
+        properties = {"error": True}
 
     return jsonify(properties)
+
 
 @app.route('/get_duration')
 def get_duration():
     """Return the duration of the currently playing item in JSON format"""
-    properties = xbmc.Player.GetProperties({"playerid":1,"properties":["totaltime"]})
+    properties = xbmc.Player.GetProperties(
+        {"playerid": 1, "properties": ["totaltime"]})
     return jsonify(properties)
+
 
 def get_all_movie_titles():
     """Return a list of all the titles of the movies in the library."""
     movies = xbmc.VideoLibrary.GetMovies(
-            {"properties":["originaltitle"],"sort":{"order":"ascending","method":"title"}})["result"]["movies"]
+        {"properties": ["originaltitle"], "sort": {"order": "ascending", "method": "title"}})["result"]["movies"]
     return movies
+
 
 def get_all_tv_show_titles():
     """Return a list of all the titles of the TV shows in the library."""
-    tv_shows = xbmc.VideoLibrary.GetTVShows({"properties":["title"],"sort":{"order":"ascending","method":"title"}})["result"]["tvshows"]
+    tv_shows = xbmc.VideoLibrary.GetTVShows({"properties": ["title"], "sort": {
+                                            "order": "ascending", "method": "title"}})["result"]["tvshows"]
     return tv_shows
 
 
 @app.route('/debug/search_movies/<search_term>')
 def debug_search_movies(search_term):
     """Return a list of movies matching the search term in JSON format."""
-    return jsonify({'movies':search_movies(search_term)})
+    return jsonify({'movies': search_movies(search_term)})
+
 
 @app.route('/debug/search_tv/<search_term>')
 def debug_search_tv(search_term):
     """Return a list of TV shows matching the search term in JSON format."""
-    return jsonify({'tv_shows':search_tv_shows(search_term)})
+    return jsonify({'tv_shows': search_tv_shows(search_term)})
+
 
 def search_movies(search_term):
     """Return a list of movies where 'search_term' is present within the title string."""
@@ -555,9 +621,10 @@ def search_movies(search_term):
             matching_movies.append(movie)
     return matching_movies
 
+
 def search_tv_shows(search_term):
     """Return a list of TV shows where 'search_term' is present within the title string."""
-    
+
     # Get all of the TV shows from the database.
     tv_shows = get_all_tv_show_titles()
 
@@ -570,6 +637,7 @@ def search_tv_shows(search_term):
             matching_tv_shows.append(show)
 
     return matching_tv_shows
+
 
 @app.route('/search')
 def search_results():
@@ -584,12 +652,13 @@ def search_results():
     # Get the query as given as a GET parameter.
     search_term = request.args.get('query')
 
-    # If the search term is empty or too short, compile empty lists and return them.
+    # If the search term is empty or too short, compile empty lists and return
+    # them.
     if search_term == '' or len(search_term) < 2:
         movies = []
         tv_shows = []
         size_error = True
-        return render_template('search-results.html',**locals())
+        return render_template('search-results.html', **locals())
 
     # Search the database to get the IDs of the matching movies.
     movie_ids = search_movies(search_term)
@@ -599,18 +668,22 @@ def search_results():
     movies = []
     tv_shows = []
 
-    # Query the database for each movie in the result and append the details to the movie list.
+    # Query the database for each movie in the result and append the details
+    # to the movie list.
     for movie in movie_ids:
-        movie_details = xbmc.VideoLibrary.GetMovieDetails({"movieid":movie["movieid"],"properties":["originaltitle","year","plot","thumbnail","cast","imdbnumber","trailer"]})["result"]["moviedetails"]
+        movie_details = xbmc.VideoLibrary.GetMovieDetails({"movieid": movie["movieid"], "properties": [
+                                                          "originaltitle", "year", "plot", "thumbnail", "cast", "imdbnumber", "trailer"]})["result"]["moviedetails"]
         movies.append(movie_details)
 
-    # Query the database for each TV show in the result and append the details to the TV show list.
+    # Query the database for each TV show in the result and append the details
+    # to the TV show list.
     for tv_show in tv_show_ids:
-        seasons = xbmc.VideoLibrary.GetSeasons({"tvshowid":tv_show["tvshowid"],"properties":["season"]})["result"]
-        tv_shows.append({"show":tv_show,"seasons":seasons})
+        seasons = xbmc.VideoLibrary.GetSeasons(
+            {"tvshowid": tv_show["tvshowid"], "properties": ["season"]})["result"]
+        tv_shows.append({"show": tv_show, "seasons": seasons})
 
-    return render_template('search-results.html',**locals())
+    return render_template('search-results.html', **locals())
 
 if __name__ == '__main__':
-    xbmc = XBMC(app.config["KODI_URI"]+"/jsonrpc")
-    app.run(debug=True,host='0.0.0.0')
+    xbmc = XBMC(app.config["KODI_URI"] + "/jsonrpc")
+    app.run(debug=True, host='0.0.0.0')
