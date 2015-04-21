@@ -110,6 +110,14 @@ $(document).ready(function() {
 				$("#tv-show-title").html(movieTitleHTML);
 				$("#episode-title").html("");
 			}
+			else if (data.item.type == "unknown") {
+				var itemTitle = data.item.title;
+				var displayTitle = itemTitle;
+				if (itemTitle.length > 17) displayTitle = itemTitle.substring(0,17) + "...";
+				var titleHTML = "<span title='" + itemTitle + "'>" + displayTitle + "</span>";
+				$("#tv-show-title").html(titleHTML);
+				$("#episode-title").html("");
+			}
 			else {
 				$("#tv-show-title").html("");
 				$("#episode-title").html("");
