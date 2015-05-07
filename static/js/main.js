@@ -3,11 +3,13 @@ $(document).ready(function() {
 	$('#search-input').focus();
 
 	// Run jquery.more on default shorten.
-	$('.shorten').more({
-		length: 125,
-		moreText: "»",
-		lessText: "«"
-	});
+	$('.shorten').more({length: 125, moreText: "»", lessText: "«"});
+
+	// Movie descriptions shorten
+	$('.movie-desc').more({length: 105, moreText: "»", lessText: "«"});
+
+	// Movie descriptions shorten
+	$('.front-movie-desc, .episode-desc').more({length: 215, moreText: "»", lessText: "«"});
 
 	$('.infoMovie').on('click', function(e) {
 		var src = "/info/movie/" + $(this).attr('data-movie-id');

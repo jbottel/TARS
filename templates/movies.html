@@ -53,7 +53,7 @@
 											{%endfor%}
 										</p>
 										<p></p>
-										<p class="movie-desc" style="font-size:85%;">{{ movie.plot|truncate(350) }}</p>
+										<p class="movie-desc" style="font-size:85%;">{{ movie.plot }}</p>
 <div class="btn-group">
 													<button type="button" data-movie-id="{{ movie.movieid }}" class="playMovie btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
 													<button type="button" data-movie-id="{{ movie.movieid }}" class="enqueueMovie btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
