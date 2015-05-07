@@ -226,7 +226,7 @@ def tv_show_seasons(show_id):
     """
     try:
         show = xbmc.VideoLibrary.GetTVShowDetails(
-            {"tvshowid": show_id})["result"]["tvshowdetails"]
+                {"tvshowid": show_id, "properties": ["plot", "art"]})["result"]["tvshowdetails"]
     except:
         show = {}
 

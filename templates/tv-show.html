@@ -24,6 +24,15 @@
 					<div class="panel-heading">
 						<h3 class="panel-title">{{ show.label }}</h3>
 					</div>
+					<div class="panel-body">
+							<p><img class="tv-banner" src="{{ config.KODI_URI }}/image/{{ show.art.banner|urlencode }}" onerror="this.style.display='none'"></p>
+						<p class="shorten showplot">{{ show.plot }}</p>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Seasons</h3>
+					</div>
 					<div class="list-group">
 						{% for season in seasons %}
 							<a href="/tv-shows/{{ show_id }}/{{ season.season }}" class="list-group-item">{{ season.label }}</a>

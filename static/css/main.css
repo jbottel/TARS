@@ -142,3 +142,25 @@ span#secdisp {
 	margin-right: 5px;
 	font-size: 120%;
 }
+
+.tv-banner {
+	width: 375px;
+}
+
+/* CSS for jQuery More plugin v2.0.0. */
+.more-hidden {
+	display: none;
+}
+.more-link {
+	margin-left: 1em;
+	padding: 0.125em;
+}
+/* end more CSS */
+
+p.center { 
+	text-align: center;
+}
+
+.showplot {
+	font-size: 90%;
+}

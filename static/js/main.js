@@ -1,5 +1,14 @@
 $(document).ready(function() {	
+	// Give focus to search bar
 	$('#search-input').focus();
+
+	// Run jquery.more on default shorten.
+	$('.shorten').more({
+		length: 125,
+		moreText: "»",
+		lessText: "«"
+	});
+
 	$('.infoMovie').on('click', function(e) {
 		var src = "/info/movie/" + $(this).attr('data-movie-id');
 		$("#infoModal iframe").attr({'src':src});
