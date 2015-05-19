@@ -199,7 +199,7 @@ def tv_shows():
     """
     try:
         recently_added_episodes_list = xbmc.VideoLibrary.GetRecentlyAddedEpisodes(
-            {"properties": ["showtitle", "title", "episode", "season", "firstaired", "plot", "thumbnail"], "limits": {"end": 15}})["result"]["episodes"]
+            {"properties": ["showtitle", "title", "episode", "season", "firstaired", "plot", "thumbnail","playcount"], "limits": {"end": 15}})["result"]["episodes"]
         recently_added_episodes = [recently_added_episodes_list[
             i:i + 3] for i in range(0, len(recently_added_episodes_list), 3)]
     except:
@@ -232,7 +232,7 @@ def tv_show_seasons(show_id):
 
     try:
         episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid": show_id, "sort": {"order": "descending", "method": "year"}, "limits": {
-                                                      "end": 15}, "properties": ["thumbnail", "title", "showtitle", "season", "episode", "firstaired"]})
+                                                      "end": 15}, "properties": ["thumbnail", "title", "showtitle", "season", "episode", "firstaired","playcount"]})
         episodes_result = episodes_list["result"]["episodes"]
         episodes = [episodes_result[i:i + 3]
                     for i in range(0, len(episodes_result), 3)]
@@ -271,7 +271,7 @@ def tv_show_seasons_episodes(show_id, season_id):
 
     try:
         episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid": show_id, "season": season_id, "sort": {
-                                                      "order": "ascending", "method": "episode"}, "properties": ["thumbnail", "title", "showtitle", "season", "episode", "firstaired"]})
+                                                      "order": "ascending", "method": "episode"}, "properties": ["thumbnail", "title", "showtitle", "season", "episode", "firstaired","playcount"]})
         episodes_result = episodes_list["result"]["episodes"]
         episodes = [episodes_result[i:i + 3]
                     for i in range(0, len(episodes_result), 3)]

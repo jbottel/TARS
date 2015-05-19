@@ -59,7 +59,7 @@
 							<div class="caption">
 								<div class="text-center">
 																<h4 class="tv-info-epititle">{{ episode.title }} </h4>
-																<p class="tv-info-epinum">Season {{ episode.season }} - Episode {{ episode.episode }} ({{ episode.firstaired }})</p>
+																<p class="tv-info-epinum">Season {{ episode.season }} - Episode {{ episode.episode }} ({{ episode.firstaired }}) {% if episode.playcount != 0 %}&nbsp;<i title="played {{episode.playcount}} times" class="fa fa-check"></i>{%endif%}</p>
 										<p></p>
 										<p class="movie-desc" style="font-size:85%;">{{ episode.plot|truncate(350) }}</p>
 <div class="btn-group">
