@@ -2,6 +2,8 @@ from flask import Flask
 from flask import render_template
 from flask import jsonify
 from flask import request
+from flask import redirect
+import random
 from xbmcjson import XBMC, PLAYER_VIDEO
 app = Flask(__name__)
 app.config.from_object('settings')
@@ -579,6 +581,33 @@ def get_duration():
         {"playerid": 1, "properties": ["totaltime"]})
     return jsonify(properties)
 
+@app.route('/movies/scan-library')
+def scan_movie_library():
+    """Send a request to Kodi to scan the movie library for updates.
+    
+    Return a redirect to the referrer. 
+    """
+    xbmc.VideoLibrary.Scan()
+    return redirect(request.referrer)
+
+@app.route('/movies/clean-library')
+def clean_movie_library():
+    """Send a request to Kodi to clean the movie library of non-existent items
+    
+    Return a redirect to the referrer. 
+    """
+    xbmc.VideoLibrary.Clean()
+    return redirect(request.referrer)
+
+@app.route('/movies/play-random')
+def play_random_movie():
+    """Select a random movie from the database and play it.
+
+    Return a redirect to the referrer. 
+    """
+    movie_to_play = random.choice(get_all_movie_titles())
+    play_movie(movie_to_play["movieid"])
+    return redirect(request.referrer)
 
 def get_all_movie_titles():
     """Return a list of all the titles of the movies in the library."""
@@ -592,6 +621,7 @@ def get_all_tv_show_titles():
     tv_shows = xbmc.VideoLibrary.GetTVShows({"properties": ["title"], "sort": {
                                             "order": "ascending", "method": "title"}})["result"]["tvshows"]
     return tv_shows
+
 
 
 @app.route('/debug/search_movies/<search_term>')
