@@ -35,6 +35,19 @@
 						{% endfor %}
 					</div>
 				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title" style="font-size:95%"><em>Other Actions</em></h3>
+					</div>
+					<div class="list-group">
+						<a href="/tv-shows/{{ show.tvshowid }}/play-season/{{ season_id }}" title="Enqueue all episodes and begin playing the first episode." class="list-group-item">Play Entire Season</a>
+						<a href="/tv-shows/{{ show.tvshowid }}/play-random/{{ season_id }}" class="list-group-item">Play Random Episode from Season {{ season_id }}</a>
+
+					</div>
+				</div>
+
+
 			</div>
 
 			<div class="col-md-8">
@@ -43,7 +56,7 @@
 						<h3 class="panel-title">{{ show.label }} - Season {{ season_id }} </h3>
 					</div>
 					<div class="panel-body">
-													{% for row in episodes %}
+						{% for row in episodes %}
 						<div class="row">
 						{% for episode in row %}
 							<div class="col-md-4">

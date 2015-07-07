@@ -609,6 +609,34 @@ def play_random_movie():
     play_movie(movie_to_play["movieid"])
     return redirect(request.referrer)
 
+@app.route("/tv-shows/<int:show_id>/play-random/<int:season>")
+def play_random_episode_from_season(show_id,season):
+    """Select a random episode from the request season and playt it.
+
+    Return a redirect to the referrer.
+    """
+    episode_to_play = random.choice(get_all_episodes_in_season(show_id, season))
+    play_episode(episode_to_play["episodeid"])
+    return redirect(request.referrer)
+
+@app.route("/tv-shows/<int:show_id>/play-season/<int:season>")
+def play_all_episodes_in_season(show_id, season):
+    """Select a random episode from the request season and playt it.
+
+    Return a redirect to the referrer.
+    """
+    episodes = get_all_episodes_in_season(show_id, season)
+    play_episode(episodes[0]["episodeid"])
+    for episode in episodes[1:]:
+        enqueue_episode(episode["episodeid"])
+    return redirect(request.referrer)
+
+def get_all_episodes_in_season(show_id, season):
+    """Return a list of all the episodes in season_id"""
+    episodes_list = xbmc.VideoLibrary.GetEpisodes({"tvshowid": show_id, "season": season})
+    episodes = episodes_list["result"]["episodes"]
+    return episodes
+
 def get_all_movie_titles():
     """Return a list of all the titles of the movies in the library."""
     movies = xbmc.VideoLibrary.GetMovies(
