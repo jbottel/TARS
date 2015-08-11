@@ -38,7 +38,7 @@ You'll need to edit `settings.py` to set up your local Kodi URI and DEBUG settin
 vi/nano/emacs settings.py 
 ```
 
-You will likely want to keep `DEBUG = True` while TARS is in development. You'll need to set `KODI_URI` to the HTTP address that Kodi is serving up the JSON-RPC API, for example, `KODI_URI = 'http://10.0.0.1:8080'`. It's important to keep in mind that the images served up by TARS refer to this URI as well, so consider using a URI that can be accessed across your network.
+You will likely want to keep `DEBUG = True` while TARS is in development. You'll need to set `JSONRPC_URI` to the HTTP address that Kodi is serving up the JSON-RPC API, for example, `JSONRPC_URI = 'http://10.0.0.1:8080'`. You'll also want to set `KODI_URI` to the HTTP address that a client web browser can use to access Kodi's image library via HTTP.
 
 Run TARS
 ```
