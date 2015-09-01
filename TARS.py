@@ -663,6 +663,17 @@ def debug_search_tv(search_term):
     """Return a list of TV shows matching the search term in JSON format."""
     return jsonify({'tv_shows': search_tv_shows(search_term)})
 
+@app.route('/debug/resume_time/<int:movie_id>')
+def debug_resume(movie_id):
+    """Return the resume time for the given Movie ID in JSON format."""
+    return jsonify({'resume_time': get_movie_resume_time(movie_id)})
+
+
+def get_movie_resume_time(movie_id):
+    """Return the resume time for the movie as given by the Kodi database"""
+    resume_time = xbmc.VideoLibrary.GetMovieDetails({"movieid": movie_id, "properties": ["resume"]})
+    return resume_time["result"]["moviedetails"]["resume"]
+
 
 def search_movies(search_term):
     """Return a list of movies where 'search_term' is present within the title string."""
