@@ -1,34 +1,8 @@
-{% block doc -%}
-	<!DOCTYPE html>
-	<html{% block html_attribs %}{% endblock html_attribs %}>
-	{%- block html %}
-			<head>
-			{%- block head %}
-				<title>{% block title %}{% endblock title %}</title>
+{% extends 'modal.html' %}
 
-					{%- block metas %}
-					<meta name="viewport" content="width=device-width, initial-scale=1.0">
-						{%- endblock metas %}
+{% block styles %}
+<link href="/static/css/info.css" rel="stylesheet" media="screen">
+<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+{% endblock styles %}
 
-						{%- block styles %}
-						<!-- Bootstrap -->
-						<link href="/static/css/info.css" rel="stylesheet" media="screen">
-						<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-						{%- endblock styles %}
-			{%- endblock head %}
-			</head>
-			<body{% block body_attribs %} style="width:900px;"{% endblock body_attribs %}>
-			{% block body -%}
-						{% block content -%}
-						{%- endblock content %}
-
-
-						{% block scripts %}
-					<script src="/static/js/jquery-1.11.2.min.js"></script>
-					<script src="/static/js/action-buttons.js"></script>
-						{%- endblock scripts %}
-			{%- endblock body %}
-			</body>
-	{%- endblock html %}
-	</html>
-{% endblock doc -%}
+{% block body_attribs %} style="width:900px;"{% endblock body_attribs %}

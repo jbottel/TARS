@@ -1,0 +1,17 @@
+<div class="thumbnail">
+	<div class="holderjs image-placeholder" style="width:220px; height: 124px;" data-background-src="?holder.js/220x124/industrial/#272b30:#c8c8c8/text:{{episode.title}}">
+		<img class="media-object" width="220" height="124" src="{{ config.KODI_URI }}/image/{{ episode.thumbnail|urlencode }}" onerror='this.style.display="none"'>
+		</div>
+		<div class="caption">
+			<div class="text-center">
+				<h4 class="tv-info-epititle">{{ episode.title }} </h4>
+				<p class="tv-info-epinum">Season {{ episode.season }} - Episode {{ episode.episode }} ({{ episode.firstaired }}) {% if episode.playcount != 0 %}&nbsp;<i title="played {{episode.playcount}} times" class="fa fa-check"></i>{%endif%}</p>
+				<p></p>
+				<p class="movie-desc" style="font-size:85%;">{{ episode.plot|truncate(350) }}</p>
+				{% include 'tv-action-buttons.html' %}
+			</div>
+
+
+		</div>
+</div>
+

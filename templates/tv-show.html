@@ -52,28 +52,8 @@
 						<div class="row">
 						{% for episode in row %}
 							<div class="col-md-4">
-						<div class="thumbnail">
-							<div class="holderjs image-placeholder" style="width:220px; height: 124px;" data-background-src="?holder.js/220x124/industrial/#272b30:#c8c8c8/text:{{episode.title}}">
-								<img class="media-object" width="220" height="124" src="{{ config.KODI_URI }}/image/{{ episode.thumbnail|urlencode }}" onerror='this.style.display="none"'>
-								</div>
-							<div class="caption">
-								<div class="text-center">
-																<h4 class="tv-info-epititle">{{ episode.title }} </h4>
-																<p class="tv-info-epinum">Season {{ episode.season }} - Episode {{ episode.episode }} ({{ episode.firstaired }}) {% if episode.playcount != 0 %}&nbsp;<i title="played {{episode.playcount}} times" class="fa fa-check"></i>{%endif%}</p>
-										<p></p>
-										<p class="movie-desc" style="font-size:85%;">{{ episode.plot|truncate(350) }}</p>
-<div class="btn-group">
-													<button type="button" data-episode-id="{{ episode.episodeid }}" class="playEpisode btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
-													<button type="button" data-episode-id="{{ episode.episodeid }}" class="enqueueEpisode btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
-													<button type="button" data-episode-id="{{ episode.episodeid }}" data-toggle="modal" data-target="#infoModal" class="infoEpisode btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
-												</div>
-
-				</div>
-
-
-							</div>
-						</div>
-					</div><!-- end col -->
+							{% include 'episode-column.html' %}
+							</div><!-- end col -->
 					{% endfor %}
 				</div>
 				{% endfor %}

@@ -1,0 +1,11 @@
+<div class="btn-group">
+	<button type="button" data-movie-id="{{ movie.movieid }}" class="playMovie btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+	<button type="button" data-movie-id="{{ movie.movieid }}" class="enqueueMovie btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
+	<button type="button" data-movie-id="{{ movie.movieid }}" data-toggle="modal" data-target="#infoModal" class="infoMovie btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
+</div>
+<div class="btn-group">
+	<button type="button" data-movie-id="{{ movie.movieid }}" data-imdb-number="{{ movie.imdbnumber }}" class="imdbOpen btn btn-default btn-xs">IMDb</button>
+	<button type="button" data-movie-id="{{ movie.movieid }}" data-trailer-id="{{ movie.trailer }}" class="trailerMovie btn btn-default btn-xs">Trailer</button>
+</div>
+
+

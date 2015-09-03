@@ -56,13 +56,7 @@
 								{% for movie in details.result.setdetails.movies %}
 									<tr>
 										<td>{{ movie.label }}</td>
-										<td style="text-align: right;">										<div class="btn-group">
-											<button data-movie-id="{{movie.movieid}}" type="button" class="playMovie btn btn-success btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
-											<button data-movie-id="{{movie.movieid}}" type="button" class="enqueueMovie btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Enqueue</button>
-											<button data-movie-id="{{movie.movieid}}" type="button" data-toggle="modal" data-target="#infoModal" class="infoMovie btn btn-default btn-xs"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Info</button>
-											<button type="button" data-movie-id="{{movie.movieid}}" data-trailer-id="{{movie.trailer}}" class="trailerMovie btn btn-default btn-xs">Trailer</button>
-										</div>
-</td>
+										<td style="text-align: right;">{% include 'movie-action-buttons.html' %}</td>
 									</tr>
 								{% endfor %}
 						</table>
