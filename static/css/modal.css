@@ -1,0 +1,24 @@
+body {
+	width: 510px;
+}
+
+.modal-container {
+	width:510px;
+}
+
+#modal-image {
+	width:120px;
+	float: left;
+}
+
+#modal-details {
+	width: 390px;
+	float: left;
+	padding: 5px;
+	padding-left: 20px;
+}
+
+p.resume-time {
+	padding-top: 25px;
+}
+

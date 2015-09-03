@@ -1,0 +1,24 @@
+{% extends "modal.html" %}
+{% block title %}Dialog{% endblock %}
+
+{% block content %}
+<div class="modal-container">
+		<div id="modal-image">
+			<img width="100%" src="{{ config.KODI_URI }}/image/{{ movie.thumbnail|urlencode }}">
+
+		</div>
+		<div id="modal-details">
+			<h3>{{ movie.originaltitle }}</h3>
+			<p>{{ movie.year }} &middot; {{ movie.runtime }} </p>
+
+			<p class="resume-time">This movie was previously stopped at {{ resume_time }}.</p>
+			<div class="btn-group">
+				<button data-movie-id="{{movie.movieid}}" type="button" class="resumeMovie btn btn-success btn-sm "><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Resume at {{ resume_time }}</button>
+				<button data-movie-id="{{movie.movieid}}" type="button" class="forcePlayMovie btn btn-default btn-sm"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> Play from Beginning</button>
+			</div>
+
+
+		</div>
+		<div style="clear: both;"></div>
+</div>
+{% endblock %}

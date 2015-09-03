@@ -21,7 +21,11 @@ $(document).ready(function() {
 	});
 	$(".info-iframe").load(function() {
 		$(this).css("height", $(this).contents().height() + "px");
+		$(this).css("width", $(this).contents().width() + "px");
+		$(".modal-dialog").css("height", $(this).contents().height() + "px");
+		$(".modal-dialog").css("width", $(this).contents().width() + "px");
 	});
+	
 	$("#remote-button").click(function() {
 		$("#remoteDiv").toggle();
 	});
