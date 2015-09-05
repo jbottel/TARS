@@ -566,6 +566,38 @@ def info_episode(episode_id):
 
     return render_template('info-episode.html', **locals())
 
+@app.route('/get_player_properties')
+def get_player_properties():
+    try:
+        player_properties = xbmc.Player.GetProperties(
+            {"playerid": 1, "properties": ["time", "percentage", "totaltime", "speed"]})["result"]
+    except:
+        player_properties = {"error": True}
+
+    return jsonify(player_properties)
+
+@app.route('/get_app_properties')
+def get_app_properties():
+    """Return a set of app properties to the client to convey current status of the Kodi application."""
+    try:
+        app_properties = xbmc.Application.GetProperties(
+            {"properties": ["volume", "muted"]})["result"]
+    except:
+        app_properties = {"error": True}
+
+    return jsonify(app_properties)
+
+
+@app.route('/get_playing_properties')
+def get_playing_properties():
+    """Return a set of playing properties to the client to convey current status of the item which is playing."""
+    try:
+        playing_properties = xbmc.Player.GetItem({"playerid": 1, "properties": [
+                                                 "title", "season", "episode", "showtitle", "thumbnail"]})["result"]
+    except:
+        playing_properties = {"error": True}
+
+    return jsonify(playing_properties)
 
 @app.route('/get_properties')
 def get_properties():
@@ -671,7 +703,6 @@ def get_all_tv_show_titles():
     tv_shows = xbmc.VideoLibrary.GetTVShows({"properties": ["title"], "sort": {
                                             "order": "ascending", "method": "title"}})["result"]["tvshows"]
     return tv_shows
-
 
 
 @app.route('/debug/search_movies/<search_term>')
