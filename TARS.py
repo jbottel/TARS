@@ -7,6 +7,7 @@ import random
 from xbmcjson import XBMC, PLAYER_VIDEO
 app = Flask(__name__)
 app.config.from_object('settings')
+xbmc = XBMC(app.config["JSONRPC_URI"] + "/jsonrpc")
 
 
 @app.route('/')
@@ -807,5 +808,4 @@ def search_results():
     return render_template('search-results.html', **locals())
 
 if __name__ == '__main__':
-    xbmc = XBMC(app.config["JSONRPC_URI"] + "/jsonrpc")
     app.run(debug=True, host='0.0.0.0')
