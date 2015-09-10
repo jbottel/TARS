@@ -110,5 +110,32 @@ class RemoteControlTestCase(unittest.TestCase):
 
         self.xbmc.Player.Stop({"playerid": 1})
 
+class ApplicationFunctionsTestCase(unittest.TestCase):
+
+    def setUp(self):
+        TARS.app.config['TESTING'] = True
+        self.xbmc = XBMC(settings.JSONRPC_URI + '/jsonrpc')
+        self.c = TARS.app.test_client()
+
+    def tearDown(self):
+        pass
+
+    def test_set_volume(self):
+        """Check that set_volume() functions changes the Kodi system volume when requested."""
+
+        current_volume = self.xbmc.Application.GetProperties( {"properties": ["volume", "muted"]})["result"]["volume"]
+
+        # First set to an arbitary value (low enough not to blow speakers!)
+        self.xbmc.Application.SetVolume({"volume": 2})
+
+        # Send the set_volume() request
+        result = self.c.get('/set/volume/1')
+        volume_properties = self.xbmc.Application.GetProperties( {"properties": ["volume", "muted"]})["result"]
+        self.assertEqual(volume_properties["volume"],1)
+
+        # Return volume to level before the test
+        self.xbmc.Application.SetVolume({"volume": current_volume})
+
+
 if __name__ == '__main__':
     unittest.main()
