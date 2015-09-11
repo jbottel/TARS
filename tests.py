@@ -136,6 +136,35 @@ class ApplicationFunctionsTestCase(unittest.TestCase):
         # Return volume to level before the test
         self.xbmc.Application.SetVolume({"volume": current_volume})
 
+class TARSSupportFunctionTestCase(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_format_runtime(self):
+        result = TARS.format_runtime(0)
+        self.assertEqual(result, "0 min 0 sec")
+
+        result = TARS.format_runtime(0,"colon")
+        self.assertEqual(result, "0:00")
+
+        result = TARS.format_runtime(60,"colon")
+        self.assertEqual(result, "1:00")
+
+        result = TARS.format_runtime(200)
+        self.assertEqual(result, "3 min 20 sec")
+
+        result = TARS.format_runtime(200,"colon")
+        self.assertEqual(result, "3:20")
+
+        result = TARS.format_runtime(123123)
+        self.assertEqual(result, "34 hr 12 min")
+
+        result = TARS.format_runtime(123123,"colon")
+        self.assertEqual(result, "34:12:03")
 
 if __name__ == '__main__':
     unittest.main()
