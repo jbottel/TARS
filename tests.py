@@ -7,16 +7,19 @@ import flask
 from xbmcjson import XBMC, PLAYER_VIDEO
 
 class StatusCodeTestCase(unittest.TestCase):
+    """Test the TARS main pages for a proper status code response.
 
-    def setUp(self):
+    All of the main pages should respond with a HTTP 200 OK proper response
+    and this class tests each to page to ensure that this is the case.
+    """
+
+    def ietUp(self):
         TARS.app.config['TESTING'] = True
         self.xbmc = XBMC(settings.JSONRPC_URI + '/jsonrpc')
         self.c = TARS.app.test_client()
 
     def tearDown(self):
         pass
-
-    # Test main pages for proper status code
 
     def test_home_status_code(self):
         result = self.c.get('/') 
@@ -55,6 +58,15 @@ class StatusCodeTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 200) 
 
 class RemoteControlTestCase(unittest.TestCase):
+    """Test the TARS Remote Control functions against the Kodi player.
+
+    The remote control template has a few very important functions that
+    are depended on in multiple areas of the app. We test against the Kodi
+    player by using a direct JSON-RPC connection to ensure that the Kodi
+    player state matches the expected state after running the TARS remote
+    control requests.
+    
+    """
 
     def setUp(self):
         TARS.app.config['TESTING'] = True
@@ -111,6 +123,14 @@ class RemoteControlTestCase(unittest.TestCase):
         self.xbmc.Player.Stop({"playerid": 1})
 
 class ApplicationFunctionsTestCase(unittest.TestCase):
+    """Test the application functions for Kodi application state.
+
+    This set of tests specifically has to do with configuration
+    and options dealing with the Kodi application state. A direct
+    JSON-RPC API connection is required to retrieve the current
+    state and compare it with the expected application state.
+    
+    """
 
     def setUp(self):
         TARS.app.config['TESTING'] = True
@@ -137,7 +157,15 @@ class ApplicationFunctionsTestCase(unittest.TestCase):
         self.xbmc.Application.SetVolume({"volume": current_volume})
 
 class TARSSupportFunctionTestCase(unittest.TestCase):
+    """Test the TARS support functions for proper operation. 
 
+    Among the tests, this set of tests is the most traditional, i.e., the 
+    idea is to make sure that the functions being tested are robust and 
+    will give the correct answer each time. These are functions within TARS
+    which format or otherwise process data for other functions so they
+    should be well tested.
+    """
+    
     def setUp(self):
         pass
 
@@ -145,6 +173,7 @@ class TARSSupportFunctionTestCase(unittest.TestCase):
         pass
 
     def test_format_runtime(self):
+        """Check that format_runtime functions properly for both runtime styles."""
         result = TARS.format_runtime(0)
         self.assertEqual(result, "0 min 0 sec")
 
