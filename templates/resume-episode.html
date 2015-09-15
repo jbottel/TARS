@@ -1,0 +1,24 @@
+{% extends "modal.html" %}
+{% block title %}Dialog{% endblock %}
+
+{% block content %}
+<div class="modal-container">
+		<div id="modal-image">
+			<img width="100%" src="{{ config.KODI_URI }}/image/{{ episode.thumbnail|urlencode }}">
+		</div>
+		<div id="modal-details">
+			<h3>{{ episode.title }}</h3>
+			<p>{{ episode.showtitle }}</p>
+			<p>Season {{ episode.season }} - Episode {{ episode.episode }} ({{episode.firstaired}})</p>
+
+			<p class="resume-time">This episode was previously stopped at {{ resume_time }}.</p>
+			<div class="btn-group">
+				<button data-episode-id="{{episode.episodeid}}" type="button" class="resumeEpisode btn btn-success btn-sm "><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Resume at {{ resume_time }}</button>
+				<button data-episode-id="{{episode.episodeid}}" type="button" class="forcePlayEpisode btn btn-default btn-sm"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> Play from Beginning</button>
+			</div>
+
+
+		</div>
+		<div style="clear: both;"></div>
+</div>
+{% endblock %}

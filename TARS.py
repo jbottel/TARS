@@ -542,11 +542,34 @@ def ask_resume_movie(movie_id):
 
     return render_template('resume-movie.html', **locals())
 
+@app.route('/episode/ask-resume/<int:episode_id>')
+def ask_resume_episode(episode_id):
+    """Get the resume point saved in the Kodi database for display to the user
+
+    Return a rendered template.
+    """
+    props = ["thumbnail", "showtitle", "title", "season", "episode",
+             "firstaired", "resume", "runtime"]
+    details = xbmc.VideoLibrary.GetEpisodeDetails(
+        {"episodeid": episode_id, "properties": props})
+    episode = details["result"]["episodedetails"]
+    episode["runtime"] = format_runtime(episode["runtime"])
+    resume_time = format_runtime(int(episode["resume"]["position"]))
+
+    return render_template('resume-episode.html', **locals())
+
 @app.route('/resume/movie/<int:movie_id>')
 def resume_movie(movie_id):
     """Start playing a movie at the resume point stored in the Kodi database"""
     xbmc.Playlist.Add({'item': {'movieid': movie_id}, 'playlistid': 1})
     xbmc.Player.Open({'item': {'movieid': movie_id}, "options":{'resume': True}})
+    return ''
+
+@app.route('/resume/episode/<int:episode_id>')
+def resume_episode(episode_id):
+    """Start playing an episode at the resume point stored in the Kodi database"""
+    xbmc.Playlist.Add({'item': {'episodeid': episode_id}, 'playlistid': 1})
+    xbmc.Player.Open({'item': {'episodeid': episode_id}, "options":{'resume': True}})
     return ''
 
 @app.route('/info/episode/<int:episode_id>')
@@ -717,11 +740,20 @@ def debug_search_tv(search_term):
     """Return a list of TV shows matching the search term in JSON format."""
     return jsonify({'tv_shows': search_tv_shows(search_term)})
 
-@app.route('/get/resume_time/<int:movie_id>')
-def get_resume_time(movie_id):
+@app.route('/get/resume_time/movie/<int:movie_id>')
+def get_movie_resume_time_in_json(movie_id):
     """Return the resume time for the given Movie ID in JSON format."""
     return jsonify({'resume_time': get_movie_resume_time(movie_id)})
 
+@app.route('/get/resume_time/episode/<int:episode_id>')
+def get_episode_resume_time_in_json(episode_id):
+    """Return the resume time for the given Episode ID in JSON format."""
+    return jsonify({'resume_time': get_episode_resume_time(episode_id)})
+
+def get_episode_resume_time(episode_id):
+    """Return the resume time for the episode as given by the Kodi database"""
+    resume_time = xbmc.VideoLibrary.GetEpisodeDetails({"episodeid": episode_id, "properties": ["resume"]})
+    return resume_time["result"]["episodedetails"]["resume"]
 
 def get_movie_resume_time(movie_id):
     """Return the resume time for the movie as given by the Kodi database"""
