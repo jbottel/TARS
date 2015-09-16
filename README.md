@@ -2,7 +2,7 @@ TARS - A Remote System
 ======================
 TARS is a web-based remote control system for Kodi (formerly known as XBMC). It allows for controlling Kodi in both traditional remote control style (navigating through Kodi's onscreen menu) and web-based browsing/searching of the Kodi media library. 
 
-TARS is different from some other web interfaces for Kodi: its focus is _function_ over form. Some interfaces are very interested in showing off the library: large art and images, for example. These are nice, but when you have a large media library or you know exactly what you want, these approaches sometimes get in the way. TARS is built to be easy, quick, and functional. The idea is to _interfere as little as possible_ but still maintain a measure of helpfulness. In the end, we let the player itself does the showing off, not the remote.
+TARS is different from some other web interfaces for Kodi: its focus is _function_ over form. Some interfaces are very interested in showing off the library: large art and images, for example. These are nice, but when you have a large media library or you know exactly what you want, these approaches sometimes get in the way. TARS is built to be easy, quick, and functional. The idea is to _interfere as little as possible_ but still maintain a measure of helpfulness. 
 
 Planned / Implemented Features:
 - Full Remote Control to navigate Kodi's onscreen menu
@@ -33,7 +33,7 @@ git clone https://github.com/jbottel/TARS.git
 
 How To Run
 ----------
-You'll need to edit `settings.py` to set up your local Kodi JSON-RPC, KODI URI and DEBUG settings.
+You'll need to edit `settings.py` to set up your local Kodi JSON-RPC, Kodi Web URI and DEBUG settings.
 ```
 vi/nano/emacs settings.py 
 ```
@@ -52,7 +52,7 @@ Enjoy!
 
 Tests
 ----------
-An application like TARS is difficult to test, however, an attempt will be made to provide tests to the level where it is possible -- keep in mind that Kodi itself is not very well tested, however. Because of the nature of TARS, for nearly all tests a direct connection to the JSON RPC API is required, and thus a Kodi instance must be running. Additionally, the Kodi instance must have some media to test with: at least one movie should exist in the Kodi database with a `movieid` of `1`. Unsurprisingly, any permissions to run TARS as normal are also required for testing. The Kodi player will flash items on and off during the tests. 
+An application like TARS is difficult to test, however, an attempt will be made to provide tests to the level where it is possible -- keep in mind that Kodi itself is not very well tested, however. Because of the nature of TARS, for nearly all tests a direct connection to the JSON-RPC API is required, and thus a Kodi instance must be running. Additionally, the Kodi instance must have some media to test with: at least one movie should exist in the Kodi database with a `movieid` of `1`. Unsurprisingly, any permissions to run TARS as normal are also required for testing. The Kodi player will flash items on and off during the tests. 
 
 After ensuring that the JSON-RPC API is correctly configured in `settings.py` and that your media library meets the specifications, you can run the test suite by running:
 ```
