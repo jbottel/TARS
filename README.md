@@ -17,13 +17,11 @@ Planned / Implemented Features:
 - Quick access to navigation to specific points within the media using a slider
 - Quick access to volume control.
 
-Keep in mind that some of these features are not fully implemented as TARS is still in its early development.
-
 Several open source frameworks and projects are used in the development of this project: [Flask](http://flask.pocoo.org/), [python-xbmc](https://github.com/jcsaaddupuy/python-xbmc), [jQuery](http://jquery.com/), [Bootstrap](http://getbootstrap.com/), [bootstrap-slider](https://github.com/seiyria/bootstrap-slider), and more.
 
 Get TARS
 --------------
-TARS is still under development and likely does not yet provide all the features you might expect in such a project. If you are interested, however, you are very welcome to clone/watch the repository. Interested developers are also welcome.
+TARS performs quite well for most users, but is still in development (refer to the feature list above). If interested, you are encouraged to begin using TARS and let me know if you encounter any difficulties. Any interested developers are also welcome to join the project.
 
 A recent version of Python 2 and the flask framework are required. It's recommended that you install flask using pip.
 ```
