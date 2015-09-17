@@ -5,17 +5,18 @@ TARS is a web-based remote control system for Kodi (formerly known as XBMC). It 
 TARS is different from some other web interfaces for Kodi: its focus is _function_ over form. Some interfaces are very interested in showing off the library: large art and images, for example. These are nice, but when you have a large media library or you know exactly what you want, these approaches sometimes get in the way. TARS is built to be easy, quick, and functional. The idea is to _interfere as little as possible_ but still maintain a measure of helpfulness. 
 
 Planned / Implemented Features:
-- Full Remote Control to navigate Kodi's onscreen menu
-- Fully browse the Kodi media library including:
-  - Movies
-  - TV Shows
-  - Music
-- Search items in the Kodi media library
-- Perform library maintenance, including:
-  - Scan library
-  - Clean library
-- Quick access to navigation to specific points within the media using a slider
-- Quick access to volume control.
+- [x] Full Remote Control to navigate Kodi's onscreen menu
+- [x] Fully browse the Kodi media library including:
+  - [x] Movies
+  - [x] TV Shows
+  - [ ] Music
+- [ ] Browse by files / source
+- [x] Search items in the Kodi media library
+- [x] Perform library maintenance, including:
+  - [x] Scan library
+  - [x] Clean library
+- [x] Quick access to navigation to specific points within the media using a slider
+- [x] Quick access to volume control.
 
 Several open source frameworks and projects are used in the development of this project: [Flask](http://flask.pocoo.org/), [python-xbmc](https://github.com/jcsaaddupuy/python-xbmc), [jQuery](http://jquery.com/), [Bootstrap](http://getbootstrap.com/), [bootstrap-slider](https://github.com/seiyria/bootstrap-slider), and more.
 
