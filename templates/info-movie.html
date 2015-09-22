@@ -4,7 +4,9 @@
 {% block content %}
 <div class="info-container">
 		<div id="info-image">
-			<img width="100%" src="{{ config.KODI_URI }}/image/{{ movie.thumbnail|urlencode }}">
+	        <div class="holderjs image-placeholder" style="width:240px; height: 360px;" data-background-src="?holder.js/240x360/industrial/#1c1e22:#c8c8c8/text:{{movie.originaltitle}}">
+			<img class="media-object" width="240" height="360" src="{{ config.KODI_URI }}/image/{{ movie.thumbnail|urlencode }}" onerror='this.style.display="none"'>
+		</div>
 
 		</div>
 		<div id="info-details">
