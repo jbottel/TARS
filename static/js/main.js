@@ -103,6 +103,8 @@ $(document).ready(function() {
 				$("#secdisp").html("0:00 / 0:00");
 				$("#tv-show-title").html("<span style='padding-right: 11em;'></span>");
 				$("#episode-title").html("&nbsp;");
+				$("#play-pause-button").removeClass("glyphicon-pause");
+				$("#play-pause-button").addClass("glyphicon-play");
 				return;
 			}
 			if (data.item.type == "episode") {
