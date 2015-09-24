@@ -538,7 +538,7 @@ def ask_resume_movie(movie_id):
         {"movieid": movie_id, "properties": props})
     movie = details["result"]["moviedetails"]
     movie["runtime"] = format_runtime(movie["runtime"])
-    resume_time = format_runtime(movie["resume"]["position"])
+    resume_time = format_runtime(int(movie["resume"]["position"]))
 
     return render_template('resume-movie.html', **locals())
 
