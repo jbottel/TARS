@@ -1,15 +1,11 @@
 body {
-	width: 510px;
+	width: 390px;
 }
 
 .modal-container {
-	width:510px;
+	width:390px;
 }
 
-#modal-image {
-	width:120px;
-	float: left;
-}
 
 #modal-details {
 	width: 390px;
