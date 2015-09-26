@@ -56,7 +56,9 @@
 						{% for movie in row %}
 							<div class="col-md-4">
 						<div class="thumbnail">
-														<img class="media-object" width="120" height="180" src="{{ config.KODI_URI }}/image/{{ movie.thumbnail|urlencode }}" alt="Generic placeholder image">
+								<div class="holderjs image-placeholder" style="width:120px; height: 180px;" data-background-src="?holder.js/120x180/industrial/#272b30:#c8c8c8/text:{{movie.originaltitle}}">
+									<img class="media-object" width="120" height="180" src="{{ config.KODI_URI }}/image/{{ movie.thumbnail|urlencode }}" onerror='this.style.display = "none"'>
+									</div>
 							<div class="caption">
 								<div class="text-center">
 																<h4>{{ movie.originaltitle }}</h4>

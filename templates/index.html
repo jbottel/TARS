@@ -61,12 +61,10 @@
 								<li class="media">
 									<div>
 								<div class="media-left">
-									<a href="#">
-										<div class="image-placeholder" style="width:80px; height: 80px;">
-																		<img class="media-object" width="80" height="120" src="{{ config.KODI_URI }}/image/{{ movie.thumbnail|urlencode }}" alt="Generic placeholder image">
+									<div class="holderjs image-placeholder" style="width:80px; height: 120px;" data-background-src="?holder.js/80x120/industrial/#272b30:#c8c8c8/text:{{movie.originaltitle}}">
+										<img class="media-object" width="80" height="120" src="{{ config.KODI_URI }}/image/{{ movie.thumbnail|urlencode }}" onerror='this.style.display = "none"'>
 										</div>
-										</a>
-									</div>
+								</div>
 
 									<div class="media-body">
 										<h4 class="media-heading">{{ movie.originaltitle }}</h4>
