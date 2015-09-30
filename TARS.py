@@ -840,4 +840,4 @@ def search_results():
     return render_template('search-results.html', **locals())
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=app.config["DEBUG"], host='0.0.0.0')
