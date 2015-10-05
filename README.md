@@ -2,6 +2,10 @@ TARS - A Remote System
 ======================
 TARS is a web-based remote control system for Kodi (formerly known as XBMC). It allows for controlling Kodi in both traditional remote control style (navigating through Kodi's onscreen menu) and web-based browsing/searching of the Kodi media library. 
 
+![Screenshot of TARS](http://jbottel.github.io/TARS/img/front-page-with-remote.png)
+
+[Additional Screenshots](#additional-screenshots)
+
 TARS is different from some other web interfaces for Kodi: its focus is _function_ over form. Some interfaces are very interested in showing off the library: large art and images, for example. These are nice, but when you have a large media library or you know exactly what you want, these approaches sometimes get in the way. TARS is built to be easy, quick, and functional. The idea is to _interfere as little as possible_ but still maintain a measure of helpfulness. 
 
 Planned / Implemented Features:
@@ -59,3 +63,17 @@ python tests.py
 ```
 
 If the attached Kodi library is very large, the tests can take a significant amount of time to run, since several database-wide queries will be executed.
+
+
+Additional Screenshots
+----------
+**Movies Page**
+![Screenshot of TARS Movies Page](http://jbottel.github.io/TARS/img/movies-page.png)
+
+**TV Page**
+![Screenshot of TARS Movies Page](http://jbottel.github.io/TARS/img/tv-page.png)
+
+**Remote and Navigation Slider**
+
+![Screenshot of TARS Movies Page](http://jbottel.github.io/TARS/img/remote.gif)
+![Screenshot of TARS Movies Page](http://jbottel.github.io/TARS/img/select.gif)
