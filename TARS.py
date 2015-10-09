@@ -478,6 +478,7 @@ def format_runtime(item_runtime, format="text"):
     "colon" -- "2:07:00"
 
     """
+    item_runtime = int(item_runtime)
     if format == "text":
         if item_runtime > 3600:
             hours = item_runtime / 3600

@@ -13,7 +13,7 @@ class StatusCodeTestCase(unittest.TestCase):
     and this class tests each to page to ensure that this is the case.
     """
 
-    def ietUp(self):
+    def setUp(self):
         TARS.app.config['TESTING'] = True
         self.xbmc = XBMC(settings.JSONRPC_URI + '/jsonrpc')
         self.c = TARS.app.test_client()
@@ -193,6 +193,19 @@ class TARSSupportFunctionTestCase(unittest.TestCase):
         self.assertEqual(result, "34 hr 12 min")
 
         result = TARS.format_runtime(123123,"colon")
+        self.assertEqual(result, "34:12:03")
+
+        # Test with float input
+        result = TARS.format_runtime(float(60),"colon")
+        self.assertEqual(result, "1:00")
+
+        result = TARS.format_runtime(float(200))
+        self.assertEqual(result, "3 min 20 sec")
+
+        result = TARS.format_runtime(float(123123))
+        self.assertEqual(result, "34 hr 12 min")
+
+        result = TARS.format_runtime(float(123123),"colon")
         self.assertEqual(result, "34:12:03")
 
 if __name__ == '__main__':
