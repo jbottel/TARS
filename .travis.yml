@@ -1,0 +1,9 @@
+language: python
+
+install: pip install flask
+
+script: 
+        # We run a limited set of tests that can be run without
+        # a running Kodi JSON-RPC server.
+        - python tests.py StatusCodeTestCase
+        - python tests.py TARSSupportFunctionTestCase
