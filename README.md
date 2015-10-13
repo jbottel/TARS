@@ -1,5 +1,7 @@
 TARS - A Remote System
 ======================
+[![Build Status](https://travis-ci.org/jbottel/TARS.svg?branch=master)](https://travis-ci.org/jbottel/TARS)
+
 TARS is a web-based remote control system for Kodi (formerly known as XBMC). It allows for controlling Kodi in both traditional remote control style (navigating through Kodi's onscreen menu) and web-based browsing/searching of the Kodi media library. 
 
 ![Screenshot of TARS](http://jbottel.github.io/TARS/img/front-page-with-remote.png)
