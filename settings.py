@@ -10,12 +10,12 @@ DEBUG = True
 # Kodi JSON-RPC Server URI
 # This is the URL which TARS should contact Kodi's JSON-RPC server
 # Do not include /jsonrpc/ on this URL
-JSONRPC_URI = 'http://192.168.1.2:8080'
+JSONRPC_URI = 'http://localhost:8080'
 
 # Kodi Image Server URI
 # This is the URL which a browser should request from retrieve Kodi's image files.
 # In many cases, this should be the same as JSONRPC_URI.
-KODI_URI = 'http://192.168.1.2:8080'
+KODI_URI = 'http://localhost:8080'
 
 
 
