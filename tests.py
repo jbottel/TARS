@@ -15,7 +15,6 @@ class StatusCodeTestCase(unittest.TestCase):
 
     def setUp(self):
         TARS.app.config['TESTING'] = True
-        self.xbmc = XBMC(settings.JSONRPC_URI + '/jsonrpc')
         self.c = TARS.app.test_client()
 
     def tearDown(self):
