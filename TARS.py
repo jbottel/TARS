@@ -196,7 +196,7 @@ def get_movies_by_set(set_id):
 def tv_shows():
     """Compile all of the items necessary to generate the TV show main page, including:
     - List of recently added episodes
-    - List of all TV shows 
+    - List of all TV shows
 
     Return a rendered template.
     """
@@ -221,7 +221,7 @@ def tv_shows():
 @app.route("/tv-shows/<int:show_id>")
 def tv_show_seasons(show_id):
     """Compile all of the items necessary to show seasons for a selected TV show, including:
-    - List of recent episodes 
+    - List of recent episodes
     - List of seasons matching the TV Show
     - Dictionary of TV show details
 
@@ -641,7 +641,7 @@ def get_properties():
         app_properties = xbmc.Application.GetProperties(
             {"properties": ["volume", "muted"]})["result"]
         playing_properties = xbmc.Player.GetItem({"playerid": 1, "properties": [
-                                                 "title", "season", "episode", "showtitle", "thumbnail"]})["result"]
+                                                 "tvshowid", "title", "season", "episode", "showtitle", "thumbnail"]})["result"]
 
         # Compile all of the properties into a single dictionary.
         properties = dict(
@@ -663,8 +663,8 @@ def get_duration():
 @app.route('/movies/scan-library')
 def scan_movie_library():
     """Send a request to Kodi to scan the movie library for updates.
-    
-    Return a redirect to the referrer. 
+
+    Return a redirect to the referrer.
     """
     xbmc.VideoLibrary.Scan()
     return redirect(request.referrer)
@@ -672,8 +672,8 @@ def scan_movie_library():
 @app.route('/movies/clean-library')
 def clean_movie_library():
     """Send a request to Kodi to clean the movie library of non-existent items
-    
-    Return a redirect to the referrer. 
+
+    Return a redirect to the referrer.
     """
     xbmc.VideoLibrary.Clean()
     return redirect(request.referrer)
@@ -682,7 +682,7 @@ def clean_movie_library():
 def play_random_movie():
     """Select a random movie from the database and play it.
 
-    Return a redirect to the referrer. 
+    Return a redirect to the referrer.
     """
     movie_to_play = random.choice(get_all_movie_titles())
     play_movie(movie_to_play["movieid"])

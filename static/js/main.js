@@ -110,19 +110,19 @@ $(document).ready(function() {
 			if (data.item.type == "episode") {
 				var tvShowTitle = data.item.showtitle;
 				var displayTVShowTitle = tvShowTitle;
-				if (tvShowTitle.length > 18) displayTVShowTitle = tvShowTitle.substring(0,18) + "...";
-				var showTitleHTML = "<span title='" + tvShowTitle + "'>" + displayTVShowTitle + "</span>";
+				if (tvShowTitle.length > 17) displayTVShowTitle = tvShowTitle.substring(0,17) + "...";
+				var showTitleHTML = "<a href='/tv-shows/" + data.item.tvshowid + "' title='" + tvShowTitle + "'>" + displayTVShowTitle + "</span>";
 				$("#tv-show-title").html(showTitleHTML);
 				var episodeTitle = "S" + data.item.season + "E" + data.item.episode + " - " + data.item.title;
 				var displayTitle = episodeTitle;
-				if (episodeTitle.length > 18) displayTitle = episodeTitle.substring(0,18) + "...";
+				if (episodeTitle.length > 17) displayTitle = episodeTitle.substring(0,17) + "...";
 				var titleHTML = "<span title='" + episodeTitle + "'>" + displayTitle + "</span>";
 				$("#episode-title").html(titleHTML);
 			}
 			else if (data.item.type == "movie") {
 				var movieTitle = data.item.title;
 				var displayMovieTitle = movieTitle;
-				if (movieTitle.length > 18) displayMovieTitle = movieTitle.substring(0,18) + "...";
+				if (movieTitle.length > 17) displayMovieTitle = movieTitle.substring(0,17) + "...";
 				var movieTitleHTML = "<span title='" + movieTitle + "'>" + displayMovieTitle + "</span>";
 				$("#tv-show-title").html(movieTitleHTML);
 				$("#episode-title").html("");
