@@ -608,8 +608,8 @@ def format_runtime(item_runtime, format="text"):
             hours = item_runtime / 3600
             minutes = item_runtime / 60 - (hours * 60)
             seconds = item_runtime - minutes * 60 - hours * 3600
-            newruntime = str(hours) + ":"
-            + str(minutes).zfill(2) + ":" + str(seconds).zfill(2)
+            newruntime = (str(hours) + ":" + str(minutes).zfill(2) +
+                          ":" + str(seconds).zfill(2))
         else:
             minutes = item_runtime / 60
             seconds = item_runtime - minutes * 60
