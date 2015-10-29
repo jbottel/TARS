@@ -161,3 +161,10 @@ p.center {
 .showplot {
 	font-size: 90%;
 }
+
+a.noshow {
+	color: rgb(200, 200, 200);
+}
+a.noshow:hover {
+	text-decoration: none;
+}

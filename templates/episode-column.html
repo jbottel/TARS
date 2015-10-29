@@ -4,7 +4,7 @@
 		</div>
 		<div class="caption">
 			<div class="text-center">
-				<h4 class="tv-info-showtitle">{{ episode.showtitle }} </h4>
+				<h4 class="tv-info-showtitle"><a class="noshow" href="/tv-shows/{{ episode.tvshowid }}">{{ episode.showtitle }}</a></h4>
 				<p class="tv-info-epititle">{{ episode.title }} </p>
 				<p class="tv-info-epinum">Season {{ episode.season }} - Episode {{ episode.episode }} ({{ episode.firstaired }}) {% if episode.playcount != 0 %}&nbsp;<i title="played {{episode.playcount}} times" class="fa fa-check"></i>{%endif%}</p>
 				<p></p>

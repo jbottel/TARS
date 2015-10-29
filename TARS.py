@@ -25,6 +25,7 @@ def index():
             {
                 "properties": [
                     "showtitle",
+                    "tvshowid",
                     "title",
                     "episode",
                     "season",
@@ -275,6 +276,7 @@ def tv_shows():
                     "firstaired",
                     "plot",
                     "thumbnail",
+                    "tvshowid",
                     "playcount"],
                 "limits": {
                     "end": 15}})["result"]["episodes"]

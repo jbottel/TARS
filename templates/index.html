@@ -31,7 +31,11 @@
 											</div>
 
 											<div class="media-body">
-												<h4 class="show-title media-heading">{{episode.showtitle}}</h4>
+												<h4 class="show-title media-heading">
+												<a class="noshow" href="/tv-shows/{{ episode.tvshowid }}">
+													{{episode.showtitle}}
+												</a>
+												</h4>
 												<p class="episode-title">{{ episode.title }}</p>
 												<p class="episode-num">Season {{episode.season}} - Episode {{episode.episode}} ({{episode.firstaired}})</p>
 												<p class="episode-desc">{{ episode.plot }}</p>
