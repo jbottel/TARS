@@ -77,4 +77,8 @@ $(".trailerMovie").click(function() {
 	$.get("/play/trailer/" + $(this).attr("data-movie-id"));
 });
 
+$(".playSong").click(function() {
+	var song_id = $(this).attr("data-song-id");
+	$.get("/play/song/" + song_id);
+});
 
