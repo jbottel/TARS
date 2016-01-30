@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}TARS - TV Shows{% endblock %}
+
+{% block content %}
+<!-- info modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<iframe frameborder="0" class="info-iframe"></iframe>
+</div>
+</div>
+</div>
+<!-- end info modal -->
+
+	<div class="container-fluid">
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li class="active">Music</li>
+		</ol>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Artists</h3>
+					</div>
+					<div class="list-group">
+						{% for artist in artists %}
+							<a href="/music/{{ artist.artistid }}" class="list-group-item">{{ artist.artist }}</a>
+						{% endfor %}
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Recently Played Songs</h3>
+					</div>
+					<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in recently_played_songs %}
+									<tr>
+										<td> {{ song.artist|join(", ") }} - {{ song.title }}</td>
+										<td style="text-align: right;">{% include 'song-action-buttons.html' %}</td>
+									</tr>
+								{% endfor %}
+						</table>
+
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -396,6 +396,33 @@ def tv_show_seasons_episodes(show_id, season_id):
     return render_template('tv-show-episodes.html', **locals())
 
 
+@app.route("/music")
+def music():
+    """Compile all of the items necessary to generate
+    the music main page, including:
+    - List of all artists
+
+    Return a rendered template.
+    """
+    try:
+        recently_played_songs_list = xbmc.AudioLibrary.GetRecentlyPlayedSongs({
+            "properties": ["artist", "title", "duration", "artistid", "albumid", "track", "year"],
+            "limits": {"end": 90}
+        })
+        recently_played_songs = recently_played_songs_list["result"]["songs"]
+        print recently_played_songs
+    except:
+        recently_played_songs = []
+
+    try:
+        artist_list = xbmc.AudioLibrary.GetArtists({"sort": {"method": "artist"}})
+        artists = artist_list["result"]["artists"]
+    except:
+        artists = []
+
+    return render_template('music.html', **locals())
+
+
 @app.route('/remote')
 def remote():
     """Return the remote template"""
@@ -583,6 +610,13 @@ def play_trailer(movie_id):
     xbmc.Player.Open({'item': {'file': trailer}})
     return ''
 
+
+@app.route('/play/song/<int:song_id>')
+def play_song(song_id):
+    """Play a song corresponding to song_id."""
+    xbmc.Playlist.Add({'item': {'songid': song_id}, 'playlistid': 1})
+    xbmc.Player.Open({'item': {'songid': song_id}})
+    return ''
 
 def format_runtime(item_runtime, format="text"):
     """Format a runtime in seconds to a human readable format in hours and minutes.
