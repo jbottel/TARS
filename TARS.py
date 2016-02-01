@@ -406,6 +406,7 @@ def music():
     """
     try:
         recently_played_songs_list = xbmc.AudioLibrary.GetRecentlyPlayedSongs({
+            "sort": {"method": "lastplayed"},
             "properties": ["artist", "title", "duration", "artistid", "albumid", "track", "year"],
             "limits": {"end": 90}
         })
@@ -421,6 +422,95 @@ def music():
         artists = []
 
     return render_template('music.html', **locals())
+
+
+@app.route("/music/<int:artist_id>")
+def artist(artist_id):
+    """Compile all of the items necessary to generate
+    an individual artist page, including:
+    - List of all albums
+    - Recently played songs by artist
+
+    Return a rendered template.
+    """
+    try:
+        artist_details = xbmc.AudioLibrary.GetArtistDetails({
+            "artistid": artist_id,
+            "properties": ["born", "died", "formed", "description", "fanart"],
+        })['result']['artistdetails']
+
+    except:
+        artist_details = []
+
+    try:
+        albums = xbmc.AudioLibrary.GetAlbums({
+            "filter": {"artistid": artist_id},
+            "properties": ["title", "description", "rating", "year", "thumbnail"]
+        })['result']['albums']
+        albums_display = [albums[i:i + 3] for i in range(0, len(albums), 3)]
+
+    except:
+        albums = []
+
+    return render_template('artist.html', **locals())
+
+
+@app.route("/music/<int:artist_id>/<int:album_id>")
+def album(artist_id, album_id):
+    """Compile all of the items necessary to generate
+    an individual album page, including:
+    - List of all songs
+    - Details on an album
+
+    Return a rendered template.
+    """
+    try:
+        artist_details = xbmc.AudioLibrary.GetArtistDetails({
+            "artistid": artist_id,
+            "properties": ["born", "died", "formed", "description", "fanart"],
+        })['result']['artistdetails']
+
+    except:
+        artist_details = []
+
+    try:
+        album = xbmc.AudioLibrary.GetAlbumDetails({
+            "albumid": album_id,
+            "properties": ["title", "description", "rating", "year", "thumbnail"]
+        })['result']['albumdetails']
+
+    except:
+        album = []
+
+    try:
+        songs = xbmc.AudioLibrary.GetSongs({
+            "filter": {"albumid": album_id},
+            "sort": {"method": "track"},
+            "properties": ["title", "artist", "rating", "year", "duration", "track"]
+        })['result']['songs']
+
+        for song in songs:
+            song['duration'] = format_runtime(song['duration'], "colon")
+
+    except:
+        songs = []
+
+    try:
+        other_albums = xbmc.AudioLibrary.GetAlbums({
+            "filter": {"artistid": artist_id},
+            "properties": ["title", "description", "rating", "year", "thumbnail"]
+        })['result']['albums']
+
+        for other_album in other_albums:
+            print other_album
+            if album_id == other_album['albumid']:
+                other_albums.remove(other_album)
+
+    except:
+        albums = []
+
+
+    return render_template('album.html', **locals())
 
 
 @app.route('/remote')
@@ -504,6 +594,7 @@ def remote_next():
 def remote_stop():
     """Press the stop button."""
     xbmc.Player.Stop({"playerid": 1})
+    xbmc.Player.Stop({"playerid": 0})
     return ''
 
 
@@ -551,6 +642,7 @@ def seek_player(seek_value):
 
     # Send a seek request to the player.
     xbmc.Player.Seek({'playerid': 1, 'value': position})
+    xbmc.Player.Seek({'playerid': 0, 'value': position})
     return ''
 
 
@@ -831,6 +923,12 @@ def get_properties():
              })["result"]
         app_properties = xbmc.Application.GetProperties(
             {"properties": ["volume", "muted"]})["result"]
+
+    except:
+        player_properties = []
+        app_properties = []
+
+    try:
         playing_properties = xbmc.Player.GetItem(
             {"playerid": 1, "properties":
              ["tvshowid",
@@ -842,14 +940,48 @@ def get_properties():
               ]
              })["result"]
 
-        # Compile all of the properties into a single dictionary.
-        properties = dict(
-            player_properties.items() +
-            app_properties.items() +
-            playing_properties.items())
+    except:
+        playing_properties = []
+
+    try:
+        if not app_properties:
+            app_properties = xbmc.Application.GetProperties(
+                {"properties": ["volume", "muted"]})["result"]
+
+        if not player_properties:
+            player_properties = xbmc.Player.GetProperties(
+                {"playerid": 0,
+                 "properties":
+                 ["time",
+                  "percentage",
+                  "totaltime",
+                  ]
+                 })["result"]
+
+        if not playing_properties:
+            playing_properties = xbmc.Player.GetItem(
+                {"playerid": 0, "properties":
+                 ["artist",
+                  "artistid",
+                  "title",
+                  "album",
+                  "duration",
+                  "thumbnail"
+                  ]
+                 })['result']
+            playing_properties['audio'] = True
 
     except:
-        properties = {"error": True}
+        player_properties = {"error": True}
+        playing_properties = {"error": True}
+        app_properties = {"error": True}
+
+    # Compile all of the properties into a single dictionary.
+
+    properties = dict(
+       player_properties.items() +
+       app_properties.items() +
+       playing_properties.items())
 
     return jsonify(properties)
 

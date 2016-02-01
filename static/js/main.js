@@ -135,6 +135,19 @@ $(document).ready(function() {
 				$("#tv-show-title").html(titleHTML);
 				$("#episode-title").html("");
 			}
+			else if ((data.audio) === true) {
+				var artist = data.item.artist;
+				var displayArtist = artist;
+				if (artist.length > 17) displayArtist = artist.substring(0,17) + "...";
+				var artistHTML = "<a href='/music/" + data.item.artistid + "' title='" + artist + "'>" + displayArtist + "</span>";
+				$("#tv-show-title").html(artistHTML);
+				var title = data.item.title;
+				var displayTitle = title;
+				if (title.length > 17) displayTitle = title.substring(0,17) + "...";
+				var titleHTML = "<span title='" + title + "'>" + displayTitle + "</span>";
+				$("#episode-title").html(titleHTML);
+
+			}
 			else {
 				$("#tv-show-title").html("");
 				$("#episode-title").html("");
