@@ -411,7 +411,6 @@ def music():
             "limits": {"end": 90}
         })
         recently_played_songs = recently_played_songs_list["result"]["songs"]
-        print recently_played_songs
     except:
         recently_played_songs = []
 
@@ -502,7 +501,6 @@ def album(artist_id, album_id):
         })['result']['albums']
 
         for other_album in other_albums:
-            print other_album
             if album_id == other_album['albumid']:
                 other_albums.remove(other_album)
 
@@ -579,6 +577,7 @@ def remote_fastforward():
 def remote_previous():
     """Press the previous button."""
     xbmc.Player.GoTo({"to": "previous", "playerid": 1})
+    xbmc.Player.GoTo({"to": "next", "playerid": 0})
     return ''
 
 
@@ -586,6 +585,7 @@ def remote_previous():
 def remote_next():
     """Press the next button."""
     xbmc.Player.GoTo({"to": "next", "playerid": 1})
+    xbmc.Player.GoTo({"to": "next", "playerid": 0})
     return ''
 
 
@@ -705,8 +705,37 @@ def play_trailer(movie_id):
 @app.route('/play/song/<int:song_id>')
 def play_song(song_id):
     """Play a song corresponding to song_id."""
-    xbmc.Playlist.Add({'item': {'songid': song_id}, 'playlistid': 1})
+    xbmc.Playlist.Add({'item': {'songid': song_id}, 'playlistid': 0})
     xbmc.Player.Open({'item': {'songid': song_id}})
+    return ''
+
+
+@app.route('/enqueue/song/<int:song_id>')
+def enqueue_song(song_id):
+    """Enqueue a song corresponding to song_id."""
+    xbmc.Playlist.Add({'item': {'songid': song_id}, 'playlistid': 0})
+    return ''
+
+
+@app.route('/play/album/<int:album_id>')
+def play_album(album_id):
+    """Play an album corresponding to album_id."""
+    xbmc.Player.Open({'item': {'albumid': album_id}})
+    return ''
+
+
+@app.route('/enqueue/album/<int:album_id>')
+def enqueue_album(album_id):
+    """Enqueue an album corresponding to album_id."""
+    songs = xbmc.AudioLibrary.GetSongs({
+            "filter": {"albumid": album_id},
+            "sort": {"method": "track"},
+            "properties": ["track"]
+        })['result']['songs']
+    print songs
+
+    for song in songs:
+        xbmc.Playlist.Add({'item': {'songid': song['songid']}, 'playlistid': 0})
     return ''
 
 

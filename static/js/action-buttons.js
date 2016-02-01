@@ -82,3 +82,18 @@ $(".playSong").click(function() {
 	$.get("/play/song/" + song_id);
 });
 
+$(".enqueueSong").click(function() {
+	var song_id = $(this).attr("data-song-id");
+	$.get("/enqueue/song/" + song_id);
+});
+
+$(".playAlbum").click(function() {
+	var album_id = $(this).attr("data-album-id");
+	$.get("/play/album/" + album_id);
+});
+
+$(".enqueueAlbum").click(function() {
+	var album_id = $(this).attr("data-album-id");
+	$.get("/enqueue/album/" + album_id);
+});
+
