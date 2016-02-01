@@ -31,17 +31,12 @@
 			</div>
 
 			<div class="col-md-8">
+				{% if movies %}
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Movie Results</h3>
 					</div>
 						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th>Title</th>
-									<th></th>
-								</tr>
-							</thead>
 							<tbody>
 								{% for movie in movies %}
 									<tr>
@@ -59,20 +54,15 @@
 								</tr>
 								{% endfor %}
 						</table>
-
-
 				</div>
+			{% endif %}
+
+				{% if tv_shows %}
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">TV Show Results</h3>
 					</div>
 						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th>Title</th>
-									<th></th>
-								</tr>
-							</thead>
 							<tbody>
 								{% for tv_show in tv_shows %}
 									<tr>
@@ -93,6 +83,31 @@
 
 
 				</div>
+			{% endif %}
+				
+			{% if episodes %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Episode Results</h3>
+					</div>
+						<table class="table table-striped">
+							<tbody>
+								{% for episode in episodes %}
+									<tr>
+										<td><a href="/tv-shows/{{episode.tvshowid}}">{{episode.showtitle}}</a> - <a href="/tv-shows/{{episode.tvshowid}}/{{episode.season}}">S{{ episode.season}}</a>E{{ episode.episode}} - <strong>{{ episode.title }}</strong></td>
+										<td style="text-align: right;">
+										<td style="text-align: right;">{% include 'episode-action-buttons.html' %}</td>
+										</td>
+									</tr>
+								{%else %}
+								<tr>
+									<td colspan="2"><p>No Results Found.</p></td>
+								</tr>
+								{% endfor %}
+						</table>
+				</div>
+			{% endif %}
+
 
 
 

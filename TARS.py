@@ -1075,6 +1075,15 @@ def get_all_tv_show_titles():
     return tv_shows
 
 
+def get_all_episode_titles():
+    """Return a list of all the titles of the episodes in the library."""
+    episodes = xbmc.VideoLibrary.GetEpisodes(
+        {"properties": ["title"],
+         "sort": {"order": "ascending", "method": "title"}})["result"][
+        "episodes"]
+    return episodes
+
+
 @app.route('/debug/search_movies/<search_term>')
 def debug_search_movies(search_term):
     """Return a list of movies matching the search term in JSON format."""
@@ -1150,6 +1159,24 @@ def search_tv_shows(search_term):
     return matching_tv_shows
 
 
+def search_episodes(search_term):
+    """Return a list of episodes where 'search_term' is present
+    within the title string.
+    """
+
+    # Get all of the episodes from the database.
+    episodes = get_all_episode_titles()
+
+    # Create a list of matching episodes.
+    matching_episodes = []
+
+    # Check each movie to see if its title matches the search term.
+    for episode in episodes:
+        if search_term.lower() in episode["title"].lower():
+            matching_episodes.append(episode)
+    return matching_episodes
+
+
 @app.route('/search')
 def search_results():
     """Compile and return a list of media items matching the query
@@ -1170,16 +1197,19 @@ def search_results():
     if search_term == '' or len(search_term) < 2:
         movies = []
         tv_shows = []
+        episodes = []
         size_error = True
         return render_template('search-results.html', **locals())
 
     # Search the database to get the IDs of the matching movies.
     movie_ids = search_movies(search_term)
     tv_show_ids = search_tv_shows(search_term)
+    episode_ids = search_episodes(search_term)
 
     # Create empty lists to return.
     movies = []
     tv_shows = []
+    episodes = []
 
     # Query the database for each movie in the result and append the details
     # to the movie list.
@@ -1204,6 +1234,25 @@ def search_results():
             {"tvshowid": tv_show["tvshowid"],
              "properties": ["season"]})["result"]
         tv_shows.append({"show": tv_show, "seasons": seasons})
+
+    # Query the database for each episode in the result and append the details
+    # to the episode list.
+
+    for episode in episode_ids:
+        episode_details = xbmc.VideoLibrary.GetEpisodeDetails(
+            {
+                "episodeid": episode["episodeid"],
+                "properties": [
+                    "title",
+                    "showtitle",
+                    "season",
+                    "episode",
+                    "tvshowid",
+                    "firstaired",
+                ]
+            })["result"]["episodedetails"]
+        episodes.append(episode_details)
+
 
     return render_template('search-results.html', **locals())
 
