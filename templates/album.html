@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}TARS - {{ artist_details.label }}{% endblock %}
+
+{% block content %}
+<!-- info modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<iframe frameborder="0" class="info-iframe"></iframe>
+</div>
+</div>
+</div>
+<!-- end info modal -->
+
+	<div class="container-fluid">
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li><a href="/music">Music</a></li>
+			<li><A href="/music/{{ artist_id }}">{{ artist_details.label }}</a></li>
+			<li class="active">{{ album.label }}</li>
+		</ol>
+
+				<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">{{ artist_details.label }} - {{ album.title }} ({{album.year}})</h3>
+					</div>
+					<div class="panel-body">
+								<div class="holderjs image-placeholder" style="width:180px; height: 180px;" data-background-src="?holder.js/180x180/industrial/#272b30:#c8c8c8/text:{{album.title}}">
+									<img class="media-object" width="180" height="180" src="{{ config.KODI_URI }}/image/{{ album.thumbnail|urlencode }}" onerror='this.style.display = "none"' />
+								</div>
+						<p class="shorten showplot">{{ album.description }}</p>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Other {{ artist_details.label }} Albums</h3>
+					</div>
+					{% if other_albums %}
+					<div class="list-group">
+						{% for album in other_albums %}
+							<a href="/music/{{ artist_id }}/{{ album.albumid }}" class="list-group-item">{{ album.title }} ({{ album.year }})</a>
+						{% endfor %}
+
+					</div>
+					{% else %}
+						<div class="panel-body">
+						<p>No other albums.</p>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+
+		
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Tracks ({{ songs|length}})</h3>
+					</div>
+						<table class="table table-striped">
+							<tbody>
+								{% for song in songs %}
+									<tr>
+										<td>{{ song.track}}. {{ song.title }} ({{ song.duration }})</td>
+										<td style="text-align: right;">{% include 'song-action-buttons.html' %}</td>
+									</tr>
+								{% endfor %}
+						</table>
+
+
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

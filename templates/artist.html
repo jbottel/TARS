@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}TARS - {{ artist_details.label }}{% endblock %}
+
+{% block content %}
+<!-- info modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<iframe frameborder="0" class="info-iframe"></iframe>
+</div>
+</div>
+</div>
+<!-- end info modal -->
+
+	<div class="container-fluid">
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li><a href="/music">Music</a></li>
+			<li class="active">{{ artist_details.label }}</li>
+		</ol>
+				<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">{{ artist_details.label }}</h3>
+					</div>
+					<div class="panel-body">
+							<p><img class="tv-banner" src="{{ config.KODI_URI }}/image/{{ artist_details.fanart|urlencode }}" onerror="this.style.display='none'"></p>
+						<p class="shorten showplot">{{ artist_details.description }}</p>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Albums</h3>
+					</div>
+					<div class="list-group">
+						{% for album in albums %}
+							<a href="/music/{{ artist_id }}/{{ album.albumid }}" class="list-group-item">{{ album.title }} ({{ album.year }})</a>
+						{% endfor %}
+
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Albums</h3>
+					</div>
+					<div class="panel-body">
+						{% for row in albums_display %}
+						<div class="row">
+						{% for album in row %}
+							<div class="col-md-4">
+						<div class="thumbnail">
+							<a href="/music/{{ artist_id }}/{{album.albumid}}">
+								<div class="holderjs image-placeholder" style="width:180px; height: 180px;" data-background-src="?holder.js/180x180/industrial/#272b30:#c8c8c8/text:{{album.title}}">
+									<img class="media-object" width="180" height="180" src="{{ config.KODI_URI }}/image/{{ album.thumbnail|urlencode }}" onerror='this.style.display = "none"' />
+								</div>
+							</a>
+							<div class="caption">
+								<div class="text-center">
+									<h4><a href="/music/{{ artist_id }}/{{album.albumid}}">{{ album.title }}</a></h4>
+									<p>{{ album.year }}</p>
+									<p class="movie-desc" style="font-size:85%;">{{ album.description|truncate(350) }}</p>
+									{% include 'album-action-buttons.html' %}
+									</div>
+							</div>
+						</div>
+					</div><!-- end col -->
+					{% endfor %}
+				</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
