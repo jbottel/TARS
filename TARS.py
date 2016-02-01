@@ -509,7 +509,6 @@ def album(artist_id, album_id):
     except:
         albums = []
 
-
     return render_template('album.html', **locals())
 
 
@@ -709,6 +708,7 @@ def play_song(song_id):
     xbmc.Playlist.Add({'item': {'songid': song_id}, 'playlistid': 1})
     xbmc.Player.Open({'item': {'songid': song_id}})
     return ''
+
 
 def format_runtime(item_runtime, format="text"):
     """Format a runtime in seconds to a human readable format in hours and minutes.
@@ -1084,6 +1084,15 @@ def get_all_episode_titles():
     return episodes
 
 
+def get_all_song_titles():
+    """Return a list of all the titles of the songs in the library."""
+    songs = xbmc.AudioLibrary.GetSongs(
+        {"properties": ["title"],
+         "sort": {"order": "ascending", "method": "title"}})["result"][
+        "songs"]
+    return songs
+
+
 @app.route('/debug/search_movies/<search_term>')
 def debug_search_movies(search_term):
     """Return a list of movies matching the search term in JSON format."""
@@ -1177,6 +1186,24 @@ def search_episodes(search_term):
     return matching_episodes
 
 
+def search_songs(search_term):
+    """Return a list of songs where 'search_term' is present
+    within the title string.
+    """
+
+    # Get all of the songs from the database.
+    songs = get_all_song_titles()
+
+    # Create a list of matching songs.
+    matching_songs = []
+
+    # Check each movie to see if its title matches the search term.
+    for song in songs:
+        if search_term.lower() in song["title"].lower():
+            matching_songs.append(song)
+    return matching_songs
+
+
 @app.route('/search')
 def search_results():
     """Compile and return a list of media items matching the query
@@ -1198,6 +1225,7 @@ def search_results():
         movies = []
         tv_shows = []
         episodes = []
+        songs = []
         size_error = True
         return render_template('search-results.html', **locals())
 
@@ -1205,11 +1233,13 @@ def search_results():
     movie_ids = search_movies(search_term)
     tv_show_ids = search_tv_shows(search_term)
     episode_ids = search_episodes(search_term)
+    song_ids = search_songs(search_term)
 
     # Create empty lists to return.
     movies = []
     tv_shows = []
     episodes = []
+    songs = []
 
     # Query the database for each movie in the result and append the details
     # to the movie list.
@@ -1253,8 +1283,23 @@ def search_results():
             })["result"]["episodedetails"]
         episodes.append(episode_details)
 
+    # Query the database for each song in the result and append the details
+    # to the song list.
+
+    for song in song_ids:
+        song_details = xbmc.AudioLibrary.GetSongDetails(
+            {
+                "songid": song["songid"],
+                "properties": [
+                    "title",
+                    "artist",
+                    "artistid",
+                ]
+            })["result"]["songdetails"]
+        songs.append(song_details)
 
     return render_template('search-results.html', **locals())
+
 
 if __name__ == '__main__':
     app.run(debug=app.config["DEBUG"], host='0.0.0.0')

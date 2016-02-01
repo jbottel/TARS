@@ -108,6 +108,28 @@
 				</div>
 			{% endif %}
 
+			{% if songs %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Song Results</h3>
+					</div>
+						<table class="table table-striped">
+							<tbody>
+								{% for song in songs %}
+									<tr>
+										<td><a href="/music/{{song.artistid[0]}}">{{song.artist[0]}}</a> - <strong>{{ song.title }}</strong></td>
+										<td style="text-align: right;">
+										<td style="text-align: right;">{% include 'song-action-buttons.html' %}</td>
+										</td>
+									</tr>
+								{%else %}
+								<tr>
+									<td colspan="2"><p>No Results Found.</p></td>
+								</tr>
+								{% endfor %}
+						</table>
+				</div>
+			{% endif %}
 
 
 
